@@ -18,7 +18,6 @@ class BlogPage(Page):
 	
 	cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
 	
-	intro = models.CharField(max_length=250)
 	body = StreamField([
 		('markdown', MarkdownBlock()),
 		('image', ImageChooserBlock()),
@@ -27,13 +26,11 @@ class BlogPage(Page):
 	
 	search_fields = Page.search_fields + [
 		index.SearchField('title'),
-		index.SearchField('intro'),
 	]
 	
 	content_panels = Page.content_panels + [
 		FieldPanel('published'),
 		ImageChooserPanel('cover_image'),
-		FieldPanel('intro'),
 		StreamFieldPanel('body'),
 	]
 	
