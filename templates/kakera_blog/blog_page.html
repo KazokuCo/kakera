@@ -1,12 +1,26 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 <article>
 	<header>
 		<h1 class="post-title">{{ page.title }}</h1>
 	</header>
+
+	{% if page.cover_image %}
+	<section class="post-cover">
+		{% image page.cover_image original %}
+	</section>
+	{% endif %}
+
+	<section class="post-intro">
+		{{ page.intro }}
+	</section>
 	<content>
 		{% include_block page.body %}
 	</content>
+
+	<footer>
+		Published on {{ page.published }}.
+	</footer>
 {% endblock %}
