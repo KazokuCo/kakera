@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
 
 {% block content %}
 <article>
@@ -10,6 +10,10 @@
 	{% if page.cover_image %}
 	<section class="post-cover">
 		{% image page.cover_image original %}
+	</section>
+	{% elif page.cover_embed %}
+	<section class="post-cover">
+		{% embed page.cover_embed %}
 	</section>
 	{% endif %}
 

@@ -4,7 +4,7 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.blocks import TextBlock
 from wagtail.wagtailsearch import index
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import MultiFieldPanel, FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailembeds.blocks import EmbedBlock
@@ -17,6 +17,7 @@ class BlogPage(Page):
 	published = models.DateTimeField()
 	
 	cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+	cover_embed = models.CharField(max_length=1000, null=True, blank=True)
 	
 	body = StreamField([
 		('markdown', MarkdownBlock()),
@@ -30,7 +31,10 @@ class BlogPage(Page):
 	
 	content_panels = Page.content_panels + [
 		FieldPanel('published'),
-		ImageChooserPanel('cover_image'),
+		MultiFieldPanel([
+			ImageChooserPanel('cover_image'),
+			FieldPanel('cover_embed'),
+		], "Cover"),
 		StreamFieldPanel('body'),
 	]
 	
