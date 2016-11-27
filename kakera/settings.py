@@ -97,6 +97,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'node_modules', 'bootstrap-sass', 'assets'),
 ]
 
 WSGI_APPLICATION = 'kakera.wsgi.application'
@@ -176,3 +177,5 @@ INTERNAL_IPS = ['127.0.0.1']
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+LIBSASS_PRECISION = 8
