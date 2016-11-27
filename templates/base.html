@@ -1,10 +1,19 @@
+{% load compress %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>{{ page.title }}</title>
+
+	{% compress css %}
+	<link rel="stylesheet" type="text/x-scss" href="/static/css/app.scss" />
+	{% endcompress %}
 </head>
 <body>
 	{% block content %}
 	<p>Please override the <code>content</code> block.</p>
 	{% endblock %}
+
+	{% compress js %}
+    <script type="text/javascript" src="/static/js/app.js" />
+	{% endcompress %}
 </body>

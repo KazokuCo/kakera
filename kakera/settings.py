@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailcore',
     'modelcluster',
     'taggit',
+    'compressor',
     'markdown_deux',
     'kakera_blog',
     'debug_toolbar',
@@ -86,6 +87,16 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 WSGI_APPLICATION = 'kakera.wsgi.application'
@@ -157,3 +168,11 @@ WAGTAIL_SITE_NAME = "KazokuCo"
 # https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
 
 INTERNAL_IPS = ['127.0.0.1']
+
+
+# Django Compressor
+# https://django-compressor.readthedocs.io/en/latest/settings/
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
