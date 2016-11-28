@@ -2,26 +2,29 @@
 {% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
 
 {% block content %}
-<article>
-	<header>
-		<h1 class="post-title">{{ page.title }}</h1>
-	</header>
+<div class="container">
+	<article class="blog-post">
+		<header>
+			<h1 class="post-title">{{ page.title }}</h1>
+		</header>
 
-	{% if page.cover_image %}
-	<section class="post-cover">
-		{% image page.cover_image original %}
-	</section>
-	{% elif page.cover_embed %}
-	<section class="post-cover">
-		{% embed page.cover_embed %}
-	</section>
-	{% endif %}
+		{% if page.cover_image %}
+		<section class="post-cover">
+			{% image page.cover_image original %}
+		</section>
+		{% elif page.cover_embed %}
+		<section class="post-cover">
+			{% embed page.cover_embed %}
+		</section>
+		{% endif %}
 
-	<content>
-		{% include_block page.body %}
-	</content>
+		<content>
+			{% include_block page.body %}
+		</content>
 
-	<footer>
-		Published on {{ page.published }}.
-	</footer>
+		<footer>
+			Published on {{ page.published }}.
+		</footer>
+	</article>
+</div>
 {% endblock %}
