@@ -47,3 +47,21 @@ class BlogIndexPage(Page):
 		context = super(BlogIndexPage, self).get_context(request)
 		context['blog_entries'] = BlogPage.objects.child_of(self).live()
 		return context
+
+class StaticPage(Page):
+	cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+	
+	body = StreamField([
+		('markdown', MarkdownBlock()),
+		('image', ImageChooserBlock()),
+		('embed', EmbedBlock()),
+	])
+	
+	search_fields = Page.search_fields + [
+		index.SearchField('title'),
+	]
+	
+	content_panels = Page.content_panels + [
+		ImageChooserPanel('cover_image'),
+		StreamFieldPanel('body'),
+	]
