@@ -9,13 +9,11 @@ RUN wget -q -O /tmp/node.tar.xz "https://nodejs.org/dist/v$NODE_VERSION/node-v$N
     tar xf /tmp/node.tar.xz -C /usr/local --strip-components=1 && \
     rm /tmp/node.tar.xz
 
-# Install the gunicorn web server.
-RUN pip install --no-cache-dir gunicorn
-
 # Install kakera itself.
 WORKDIR /srv/kakera
 ADD . .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir psycopg2 gunicorn
 RUN npm install
 
 # Build assets.
