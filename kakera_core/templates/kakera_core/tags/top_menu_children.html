@@ -1,7 +1,7 @@
 {% load kakera_tags wagtailcore_tags %}
 
 <ul class="pure-menu-children">
-	{% for item in menu_items %}
+    {% for item in menu_items %}
     <li class="pure-menu-item{% if item.active %} pure-menu-selected{% endif %}"><a href="{% pageurl item %}" class="pure-menu-link">{{ item.title }}</a></li>
     {% endfor %}
 </ul>
