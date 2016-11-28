@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'taggit',
     'compressor',
     'markdown_deux',
+    'kakera_core',
     'kakera_blog',
     'debug_toolbar',
 ]

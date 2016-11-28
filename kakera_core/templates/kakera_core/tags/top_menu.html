@@ -1,0 +1,33 @@
+{% load kakera_tags wagtailcore_tags %}
+
+{# Implementation of bootstrap theme dropdown menu - shows top level links and their children #}
+<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {# Link to home page #}
+            <a href="{% pageurl request.site.root_page %}" class="navbar-brand" title="{{ request.site.root_page.title }}" data-placement="bottom">
+                <i class="glyphicon glyphicon-home"></i>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                {% for menu_item in menu_items %}
+                    <li class="{% if menu_item.show_dropdown %}dropdown{% endif %}{% if menu_item.active %} active{% endif %}">
+                        {% if menu_item.show_dropdown %}
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ menu_item.title }} <b class="caret"></b></a>
+                            {% top_menu_children parent=menu_item %}
+                        {% else %}
+                            <a href="{% pageurl menu_item %}">{{ menu_item.title }}</a>
+                        {% endif %}
+                    </li>       
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

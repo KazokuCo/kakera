@@ -1,4 +1,4 @@
-{% load compress %}
+{% load compress kakera_tags wagtailcore_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,10 @@
 	{% endcompress %}
 </head>
 <body>
+    {% block menu %}
+    {% top_menu parent=request.site.root_page calling_page=self %}
+    {% endblock %}
+
 	{% block content %}
 	<p>Please override the <code>content</code> block.</p>
 	{% endblock %}
