@@ -10,10 +10,9 @@ def has_menu_children(page):
 @register.inclusion_tag('kakera_core/tags/top_menu.html', takes_context=True)
 def top_menu(context, parent, calling_page=None):
     menu_items = parent.get_children().live().in_menu()
-    for menu_item in menu_items:
-        menu_item.show_dropdown = has_menu_children(menu_item)
-        menu_item.active = (calling_page.url.startswith(menu_item.url)
-                           if calling_page else False)
+    for item in menu_items:
+        item.show_dropdown = has_menu_children(item)
+        item.active = calling_page.url.startswith(item.url) if calling_page else False
     return {
         'calling_page': calling_page,
         'menu_items': menu_items,
@@ -22,12 +21,14 @@ def top_menu(context, parent, calling_page=None):
     }
 
 @register.inclusion_tag('kakera_core/tags/top_menu_children.html', takes_context=True)
-def top_menu_children(context, parent):
-    menu_items_children = parent.get_children()
-    menu_items_children = menu_items_children.live().in_menu()
+def top_menu_children(context, parent, calling_page=None):
+    menu_items = parent.get_children().live().in_menu()
+    for item in menu_items:
+        item.show_dropdown = has_menu_children(item)
+        item.active = calling_page.url.startswith(item.url) if calling_page else False
     return {
         'parent': parent,
-        'menu_items_children': menu_items_children,
+        'menu_items': menu_items,
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }
