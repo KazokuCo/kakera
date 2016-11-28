@@ -75,7 +75,9 @@ ROOT_URLCONF = 'kakera.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'kakera_core', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,6 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'kakera_core.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -162,6 +166,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 # http://docs.wagtail.io/en/v1.7/advanced_topics/settings.html
 
 WAGTAIL_SITE_NAME = "KazokuCo"
+
+WAGTAIL_USER_EDIT_FORM = 'kakera_core.forms.UserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'kakera_core.forms.UserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['bio', 'twitter']
 
 
 # Django Debug Toolbar
