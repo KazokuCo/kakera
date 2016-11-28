@@ -1,0 +1,22 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker build --rm=false -t kazokuco/kakera .
+
+test:
+  override:
+    - docker run --rm=false kazokuco/kakera ./manage.py test
+
+deployment:
+  prod:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag kazokuco/kakera kazokuco/kakera:v$CIRCLE_BUILD_NUM
+      - docker push kazokuco/kakera:v$CIRCLE_BUILD_NUM
+      - docker push kazokuco/kakera
+      # - wget https://storage.googleapis.com/kubernetes-release/release/v1.4.4/bin/linux/amd64/kubectl -O /tmp/kubectl && chmod +x /tmp/kubectl
+      # - /tmp/kubectl --server https://kubernetes.kazoku.co:6443 --token $K8S_TOKEN --insecure-skip-tls-verify set image --namespace kazamatsuri deployment/kakera kakera=kazokuco/kakera:v$CIRCLE_BUILD_NUM
