@@ -1,17 +1,22 @@
 from django.db import models
 
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.blocks import TextBlock
 from wagtail.wagtailsearch import index
 from wagtail.wagtailadmin.edit_handlers import MultiFieldPanel, FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailembeds.blocks import EmbedBlock
 
-class MarkdownBlock(TextBlock):
+class MarkdownBlock(blocks.TextBlock):
     class Meta:
         template = 'kakera_blog/blocks/markdown.html'
+
+class DefaultStreamBlock(blocks.StreamBlock):
+    markdown = MarkdownBlock()
+    image = ImageChooserBlock()
+    embed = EmbedBlock()
 
 class BlogPage(Page):
     published = models.DateTimeField()
@@ -19,11 +24,7 @@ class BlogPage(Page):
     cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     cover_embed = models.CharField(max_length=1000, null=True, blank=True)
 
-    body = StreamField([
-        ('markdown', MarkdownBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
-    ])
+    body = StreamField(DefaultStreamBlock())
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
@@ -51,11 +52,7 @@ class BlogIndexPage(Page):
 class StaticPage(Page):
     cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
 
-    body = StreamField([
-        ('markdown', MarkdownBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
-    ])
+    body = StreamField(DefaultStreamBlock())
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
