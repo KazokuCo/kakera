@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -20,6 +21,7 @@ class DefaultStreamBlock(blocks.StreamBlock):
 
 class BlogPage(Page):
     published = models.DateTimeField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     cover_embed = models.CharField(max_length=1000, null=True, blank=True)
@@ -32,6 +34,7 @@ class BlogPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('published'),
+        FieldPanel('author'),
         MultiFieldPanel([
             ImageChooserPanel('cover_image'),
             FieldPanel('cover_embed'),
