@@ -100,6 +100,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'node_modules'),
     os.path.join(BASE_DIR, 'node_modules', 'bootstrap-sass', 'assets'),
+    os.path.join(BASE_DIR, 'node_modules', 'font-awesome'),
 ]
 
 WSGI_APPLICATION = 'kakera.wsgi.application'
