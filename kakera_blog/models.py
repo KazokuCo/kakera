@@ -56,7 +56,7 @@ class BlogPage(Page):
 class BlogIndexPage(Page):
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
-        context['blog_entries'] = BlogPage.objects.child_of(self).live()
+        context['blog_entries'] = BlogPage.objects.child_of(self).live().order_by('-published')
         return context
 
 class StaticPage(Page):
