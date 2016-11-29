@@ -1,4 +1,4 @@
-{% load compress kakera_tags wagtailcore_tags %}
+{% load compress kakera_tags wagtailcore_tags wagtailuserbar %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,8 @@
 	{% block content %}
 	<p>Please override the <code>content</code> block.</p>
 	{% endblock %}
+
+    {% wagtailuserbar %}
 
 	{% compress js %}
     <script type="text/javascript" src="/static/js/app.js" />
