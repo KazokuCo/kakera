@@ -9,6 +9,7 @@ from wagtail.wagtailadmin.edit_handlers import MultiFieldPanel, FieldPanel, Stre
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailembeds.blocks import EmbedBlock
+from wagtail.wagtailembeds.format import embed_to_frontend_html
 
 class MarkdownBlock(blocks.TextBlock):
     class Meta:
@@ -45,6 +46,12 @@ class BlogPage(Page):
     # Only allow blog posts under index pages, disallow subpages
     parent_page_types = ['kakera_blog.BlogIndexPage']
     subpage_types = []
+
+    def get_context(self, request):
+        context = super(BlogPage, self).get_context(request)
+        if self.cover_embed:
+            context['cover_embed_html'] = embed_to_frontend_html(self.cover_embed)
+        return context
 
 class BlogIndexPage(Page):
     def get_context(self, request):

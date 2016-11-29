@@ -9,12 +9,12 @@
         </header>
 
         {% if page.cover_image %}
-        <section class="post-cover">
+        <section class="block-image post-cover">
             {% image page.cover_image original %}
         </section>
         {% elif page.cover_embed %}
-        <section class="post-cover">
-            {% embed page.cover_embed %}
+        <section class="block-embed post-cover">
+            {{ cover_embed_html|safe }}
         </section>
         {% endif %}
 
