@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <article class="blog-page">
+    <article class="blog-box blog-post blog-page">
         <header>
             <h1 class="post-title">{{ page.title }}</h1>
         </header>
@@ -14,9 +14,11 @@
         </section>
         {% endif %}
 
-        <content>
-            {% include_block page.body %}
-        </content>
+        {% for block in page.body %}
+        <section class="block-{{ block.block_type }}">
+            {% include_block block %}
+        </section>
+        {% endfor %}
     </article>
 </div>
 {% endblock %}

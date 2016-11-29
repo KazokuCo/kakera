@@ -6,3 +6,4 @@ django-debug-toolbar
 django-compressor
 django-libsass
 django-markdown-deux
+django-gravatar2

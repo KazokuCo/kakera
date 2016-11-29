@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags markdown_deux_tags gravatar humanize %}
 
 {% block content %}
 <div class="container">
-    <article class="blog-post">
+    <article class="blog-box blog-post">
         <header>
             <h1 class="post-title">{{ page.title }}</h1>
         </header>
@@ -18,13 +18,31 @@
         </section>
         {% endif %}
 
-        <content>
-            {% include_block page.body %}
-        </content>
+        {% for block in page.body %}
+        <section class="block-{{ block.block_type }}">
+            {% include_block block %}
+        </section>
+        {% endfor %}
 
         <footer>
-            Published on {{ page.published }}.
+            <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturaltime }}</abbr>
         </footer>
     </article>
+
+    <div class="blog-box blog-author">
+        <div class="blog-author-avatar">
+            <img src="{% gravatar_url page.author.email 200 %}" />
+        </div>
+        <div class="blog-author-info">
+            <h3>{{ page.author.get_username }}</h3>
+            <div>{{ page.author.bio|markdown }}</div>
+            <div class="links">
+                {% if page.author.twitter %}<a href="https://twitter.com/{{ page.author.twitter }}">@{{ page.author.twitter }}</a>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="blog-box blog-comments">
+    </div>
 </div>
 {% endblock %}
