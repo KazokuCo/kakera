@@ -10,11 +10,13 @@
                 <h3><a href="{% pageurl post %}">{{ post.title }}</a></h3>
             </header>
             <section class="post-cover">
-                {% if post.cover_image %}
                 <a href="{% pageurl post %}">
+                {% if post.cover_image %}
                     {% image post.cover_image fill-500x300 %}
-                </a>
+                {% elif post.cover_embed %}
+                    <div><div class="embed-thumbnail" style="background-image: url({{ post.get_cover_embed_thumbnail_url }});"></div></div>
                 {% endif %}
+                </a>
             </section>
             <section class="blog-item-excerpt">
                 {{ post.get_excerpt|markdown }}

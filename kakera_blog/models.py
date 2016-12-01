@@ -10,6 +10,8 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailembeds.format import embed_to_frontend_html
+from wagtail.wagtailembeds.embeds import get_embed
+from wagtail.wagtailembeds.exceptions import EmbedException
 
 class MarkdownBlock(blocks.TextBlock):
     class Meta:
@@ -55,6 +57,12 @@ class BlogPage(Page):
 
     def get_cover_embed_html(self):
         return embed_to_frontend_html(self.cover_embed)
+
+    def get_cover_embed_thumbnail_url(self):
+        try:
+            return get_embed(self.cover_embed).thumbnail_url
+        except EmbedException:
+            return ""
 
 class BlogIndexPage(Page):
     def get_context(self, request):
