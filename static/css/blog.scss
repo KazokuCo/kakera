@@ -11,7 +11,6 @@
     }
 }
 
-
 .blog-post {
     header, section {
         max-width: 700px;
@@ -83,6 +82,26 @@
     img {
         max-width: 100%;
         height: auto;
+    }
+
+    &.blog-post-small {
+        .post-cover {
+            padding: 0;
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+        header, section {
+            font-size: 18px;
+        }
+        .read-more {
+            display: block;
+            background: #f4f4f4;
+            color: #666;
+            padding: 20px;
+        }
     }
 }
 

@@ -47,6 +47,12 @@ class BlogPage(Page):
     parent_page_types = ['kakera_blog.BlogIndexPage']
     subpage_types = []
 
+    def get_excerpt(self):
+        for block in self.body:
+            if block.block_type == 'markdown':
+                return ' '.join(block.value.split(' ')[:50]) + "..."
+        return ""
+
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         if self.cover_embed:

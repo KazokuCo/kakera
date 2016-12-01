@@ -1,12 +1,27 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags markdown_deux_tags %}
 
 {% block content %}
 <div class="container">
-    <ul>
     {% for post in blog_entries %}
-        <li><a href="{% pageurl post %}">{{ post.title }}</a></li>
+    <div class="col-sm-6 col-md-4">
+        <div class="blog-box blog-post blog-post-small">
+            <header>
+                <h3><a href="{% pageurl post %}">{{ post.title }}</a></h3>
+            </header>
+            <section class="post-cover">
+                {% if post.cover_image %}
+                <a href="{% pageurl post %}">
+                    {% image post.cover_image fill-500x300 %}
+                </a>
+                {% endif %}
+            </section>
+            <section class="blog-item-excerpt">
+                {{ post.get_excerpt|markdown }}
+            </section>
+            <a href="{% pageurl post %}" class="read-more">Read more</a>
+        </div>
+    </div>
     {% endfor %}
-    </ul>
 </div>
 {% endblock %}
