@@ -12,6 +12,9 @@ from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailembeds.format import embed_to_frontend_html
 from wagtail.wagtailembeds.embeds import get_embed
 from wagtail.wagtailembeds.exceptions import EmbedException
+from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
 
 class MarkdownBlock(blocks.TextBlock):
     class Meta:
@@ -22,6 +25,9 @@ class DefaultStreamBlock(blocks.StreamBlock):
     image = ImageChooserBlock()
     embed = EmbedBlock()
 
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey('kakera_blog.BlogPage', related_name='tagged_items')
+
 class BlogPage(Page):
     published = models.DateTimeField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
@@ -30,6 +36,7 @@ class BlogPage(Page):
     cover_embed = models.CharField(max_length=1000, null=True, blank=True)
 
     body = StreamField(DefaultStreamBlock())
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
@@ -43,6 +50,7 @@ class BlogPage(Page):
             FieldPanel('cover_embed'),
         ], "Cover"),
         StreamFieldPanel('body'),
+        FieldPanel('tags'),
     ]
 
     # Only allow blog posts under index pages, disallow subpages

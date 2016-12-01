@@ -25,7 +25,15 @@
         {% endfor %}
 
         <footer>
-            <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturaltime }}</abbr>
+            <span class="post-published">
+                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturaltime }}</abbr>
+            </span>
+            <span class="post-tags">
+                {% for tag in page.tags.all %}
+                    {% if forloop.first %}<i class="fa fa-tags"></i>{% endif %}
+                    <a>{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
         </footer>
     </article>
 
