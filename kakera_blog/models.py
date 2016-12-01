@@ -53,11 +53,8 @@ class BlogPage(Page):
                 return ' '.join(block.value.split(' ')[:50]) + "..."
         return ""
 
-    def get_context(self, request):
-        context = super(BlogPage, self).get_context(request)
-        if self.cover_embed:
-            context['cover_embed_html'] = embed_to_frontend_html(self.cover_embed)
-        return context
+    def get_cover_embed_html(self):
+        return embed_to_frontend_html(self.cover_embed)
 
 class BlogIndexPage(Page):
     def get_context(self, request):

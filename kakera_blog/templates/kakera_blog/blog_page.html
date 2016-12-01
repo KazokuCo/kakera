@@ -14,7 +14,7 @@
         </section>
         {% elif page.cover_embed %}
         <section class="block-embed post-cover">
-            {{ cover_embed_html|safe }}
+            {{ page.get_cover_embed_html|safe }}
         </section>
         {% endif %}
 
