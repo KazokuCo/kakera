@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ page.title }}</title>
+    <title>{{ page.title }}</title>
 
-	{% compress css %}
-	<link rel="stylesheet" type="text/x-scss" href="/static/css/app.scss" />
-	{% endcompress %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="/static/css/app.scss" />
+    {% endcompress %}
 </head>
 <body>
     {% block menu %}
     {% top_menu parent=request.site.root_page calling_page=self %}
     {% endblock %}
 
-	{% block content %}
-	<p>Please override the <code>content</code> block.</p>
-	{% endblock %}
+    {% block content %}
+    <p>Please override the <code>content</code> block.</p>
+    {% endblock %}
 
     {% wagtailuserbar %}
 
-	{% compress js %}
+    {% compress js %}
     <script type="text/javascript" src="/static/js/app.js" />
-	{% endcompress %}
+    {% endcompress %}
 </body>
