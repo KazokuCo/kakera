@@ -8,13 +8,13 @@
             <h1 class="post-title">{{ page.title }}</h1>
         </header>
 
-        {% if page.cover_image %}
-        <section class="block-image post-cover">
-            {% image page.cover_image original %}
-        </section>
-        {% elif page.cover_embed %}
+        {% if page.cover_embed %}
         <section class="block-embed post-cover">
             {{ page.get_cover_embed_html|safe }}
+        </section>
+        {% elif page.cover_image %}
+        <section class="block-image post-cover">
+            {% image page.cover_image original %}
         </section>
         {% endif %}
 
