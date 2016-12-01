@@ -67,6 +67,12 @@
                 margin: 0 auto;
             }
         }
+
+        @media(max-width: $screen-md-max) {
+            box-shadow: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
     footer {
