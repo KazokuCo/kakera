@@ -43,8 +43,11 @@
             &:last-child { margin-bottom: 0; }
         }
 
-        &.post-cover, &.block-image, &.block-embed {
+        &.post-cover {
             max-width: 1000px;
+        }
+
+        &.post-cover, &.block-image, &.block-embed {
             padding: 0.5em 0;
             text-align: center;
         }
