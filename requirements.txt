@@ -2,6 +2,7 @@ django >= 1.10, < 1.11
 wagtail < 2.0
 django-redis
 hiredis
+django-health-check
 django-debug-toolbar
 django-compressor
 django-libsass

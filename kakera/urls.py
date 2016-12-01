@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^__debug__/', include(debug_toolbar_urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^docs/', include(wagtaildocs_urls)),
+    url(r'^healthz/', include('health_check.urls')),
     url(r'^', include(wagtail_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

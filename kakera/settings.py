@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'kakera_core',
     'kakera_blog',
     'debug_toolbar',
+    'health_check',
+    'health_check_db',
+    'health_check_cache',
 ]
 
 MIDDLEWARE = [
