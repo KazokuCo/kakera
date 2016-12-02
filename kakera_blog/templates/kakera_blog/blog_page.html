@@ -31,7 +31,7 @@
             <span class="post-tags">
                 {% for tag in page.tags.all %}
                     {% if forloop.first %}<i class="fa fa-tags"></i>{% endif %}
-                    <a>{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                    {{ tag }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </span>
         </footer>
