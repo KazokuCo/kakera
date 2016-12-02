@@ -20,6 +20,7 @@ RUN npm install
 RUN ./manage.py compress && ./manage.py collectstatic --noinput
 
 # Run it under gunicorn.
-ENV GUNICORN_WORKERS 1
+ENV GUNICORN_WORKERS 2
+ENV GUNICORN_THREADS 4
 EXPOSE 8000
-CMD ["/bin/bash", "-c", "/usr/local/bin/gunicorn -b 0.0.0.0:8000 -w ${GUNICORN_WORKERS} kakera.wsgi"]
+CMD ["./docker_entrypoint.sh"]
