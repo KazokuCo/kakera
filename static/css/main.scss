@@ -1,8 +1,12 @@
-body {
+.theme-background {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: bottom left;
     background-size: 100%;
+
+    @media(max-width: $screen-md-max) {
+        background-image: none;
+    }
 }
 
 .site-header {
