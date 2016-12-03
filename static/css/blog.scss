@@ -7,7 +7,7 @@
     margin-bottom: 20px;
     padding: 10px 0;
 
-    >footer {
+    >footer, .footer {
         margin-bottom: -10px;
     }
 
@@ -82,7 +82,8 @@
         }
     }
 
-    footer {
+    footer, .footer {
+        display: block;
         background: #f4f4f4;
         padding: 20px;
     }
@@ -118,10 +119,7 @@
             font-size: 18px;
         }
         .read-more {
-            display: block;
-            background: #f4f4f4;
             color: #666;
-            padding: 20px;
         }
     }
 }
