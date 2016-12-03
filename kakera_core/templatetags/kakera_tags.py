@@ -32,3 +32,7 @@ def top_menu_children(context, parent, calling_page=None):
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }
+
+@register.simple_tag
+def get_site_theme(site):
+    return site.themes.filter(active=True).first()

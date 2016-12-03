@@ -1,18 +1,59 @@
-{% load compress kakera_tags wagtailcore_tags wagtailuserbar %}
+{% load compress kakera_tags wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% get_site_theme request.site as site_theme %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    {% if site_theme %}
+    {% image site_theme.background original as background_image %}
+    {% image site_theme.cover original as cover_image %}
+    <style type="text/css">
+    .theme-background { background-image: url("{{ background_image.url }}"); }
+    .theme-cover { background-image: url("{{ cover_image.url }}"); }
+    {{ site_theme.extra_css|safe }}
+    </style>
+    {% endif %}
+
     {% compress css %}
     <link rel="stylesheet" type="text/x-scss" href="/static/css/app.scss" />
     {% endcompress %}
 </head>
-<body>
-    {% block menu %}
-    {% top_menu parent=request.site.root_page calling_page=self %}
-    {% endblock %}
+<body class="theme-background">
+    <header class="site-header theme-cover">
+        <section class="logo">
+            <div class="container">
+                {% if site_theme %}
+                {% image site_theme.logo original as logo_image %}
+                <img src="{{ logo_image.url }}" id="logo" />
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="menu">
+            <div class="container clearfix">
+                <div class="nav">
+                    {% top_menu parent=request.site.root_page calling_page=self %}
+                </div>
+                <div class="social">
+                    <div class="pure-menu pure-menu-horizontal">
+                        <ul class="pure-menu-list">
+                            <li class="pure-menu-item"><a href="https://twitter.com/KazamatsuriOrg" class="pure-menu-link"><i class="fa fa-twitter"></i></a></li>
+                            <li class="pure-menu-item"><a href="https://facebook.com/KazamatsuriOrg" class="pure-menu-link"><i class="fa fa-facebook"></i></a></li>
+                            <li class="pure-menu-item"><a href="https://kazamatsuri.org/discord" class="pure-menu-link">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 176.416 612 439.168" ><path d="M537.988,231.91c-75.571-56.547-147.444-54.961-147.444-54.961l-7.398,8.456c89.312,26.953,130.533,66.588,130.533,66.588 c-54.433-29.594-108.338-44.392-158.015-50.205c-38.05-4.228-73.986-3.171-106.223,1.057c-3.171,0.528-5.813,1.057-8.984,1.057 c-18.497,1.585-62.889,8.456-118.907,32.765c-20.082,8.456-31.18,14.797-31.18,14.797s43.335-41.75,137.932-68.702l-5.285-6.342 c0,0-71.873-1.585-147.445,54.961c0,0-75.572,136.347-75.572,304.402c0,0,44.392,76.101,160.128,79.8 c0,0,19.025-23.253,34.879-43.335c-66.588-19.554-91.955-61.304-91.955-61.304s5.285,3.7,14.269,8.984 c0.528,0.528,1.585,1.057,2.114,1.057c1.585,1.058,3.171,1.586,4.756,2.643c13.74,7.399,26.424,13.212,38.579,17.969 c21.139,8.455,47.035,16.911,77.158,22.195c39.636,7.399,85.613,9.513,135.818,0.529c24.839-4.757,50.206-11.627,76.101-22.725 c18.497-6.87,38.579-16.911,60.775-31.181c0,0-25.896,42.807-95.126,62.36c15.854,19.554,34.351,42.278,34.351,42.278 c115.736-3.699,160.129-79.8,160.129-79.8C613.561,367.729,537.988,231.91,537.988,231.91z M209.276,487.164 c-29.594,0-53.904-25.896-53.904-57.604c0-31.709,23.781-57.604,53.904-57.604c29.595,0,53.905,25.895,53.905,57.604 C263.181,461.269,238.871,487.164,209.276,487.164L209.276,487.164z M400.585,487.164c-29.595,0-53.904-25.896-53.904-57.604 c0-31.709,23.781-57.604,53.904-57.604c29.595,0,53.904,25.895,53.904,57.604C454.489,461.269,430.18,487.164,400.585,487.164 L400.585,487.164z"></path></svg>
+                            </a></li>
+                            <li class="pure-menu-item"><a href="https://patreon.com/kazoku" class="pure-menu-link">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 90.001 612.008 612.037"><path d="M0,387.585C0,245.027,115.783,111.42,268.438,92.295c109.396-12.737,192.13,29.261,249.39,83.997 c53.397,50.873,85.222,115.821,92.871,192.206c6.35,76.386-10.174,142.596-54.697,205.021 c-44.523,61.047-132.345,128.52-241.74,128.52H165.393V407.973c1.3-64.911,22.95-120.947,101.745-147.646 c68.735-20.387,148.907,17.786,173.082,90.347c25.397,77.647-11.476,129.858-54.698,161.683 c-43.299,31.824-110.733,31.824-155.295,1.263v100.597c29.3,13.962,66.173,17.787,92.947,16.448 c96.62-13.962,171.743-68.697,203.49-151.471c33.125-87.783,10.213-189.605-58.522-253.215 c-82.62-67.511-173.004-84.035-269.662-36.949C131.044,223.378,83.959,293.375,72.484,369.722V702H1.262L0,387.585z"></path></svg>
+                            </a></li>
+                            <li class="pure-menu-item"><a href="/feed.xml" class="pure-menu-link"><i class="fa fa-rss"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
 
     {% block content %}
     <p>Please override the <code>content</code> block.</p>
