@@ -36,3 +36,7 @@ def top_menu_children(context, parent, calling_page=None):
 @register.simple_tag
 def get_site_theme(site):
     return site.themes.filter(active=True).first()
+
+@register.simple_tag
+def get_site_settings(site):
+    return site.settings.first()
