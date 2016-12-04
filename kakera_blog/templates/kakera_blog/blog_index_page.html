@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags markdown_deux_tags %}
+{% load wagtailcore_tags wagtailimages_tags markdown_deux_tags humanize %}
 
 {% block content %}
 <div class="container">
@@ -21,7 +21,10 @@
             <section class="blog-item-excerpt">
                 {{ post.get_excerpt|markdown }}
             </section>
-            <a href="{% pageurl post %}" class="read-more footer">Read more</a>
+            <a href="{% pageurl post %}" class="read-more footer">
+                Read more
+                <span class="blog-item-posted"><i class="fa fa-clock-o"></i> {{ post.published|naturalday }}</span>
+            </a>
         </article>
     </div>
     {% endfor %}

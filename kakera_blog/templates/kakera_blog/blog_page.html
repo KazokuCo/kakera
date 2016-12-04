@@ -55,7 +55,7 @@
 
         <footer>
             <span class="post-published">
-                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturaltime }}</abbr>
+                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturalday }}</abbr>
             </span>
             <span class="post-tags">
                 {% for tag in page.tags.all %}
