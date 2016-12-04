@@ -34,11 +34,6 @@
             padding: 10px 10px;
             color: #eee;
 
-            &:hover {
-                background-color: rgba(0,0,0,0.5);
-                text-decoration: none;
-            }
-
             svg {
                 height: 1em;
                 display: inline-block;
@@ -56,6 +51,11 @@
         >.pure-menu-item .pure-menu-link {
             &:first-child { padding-left: 0; }
             &:last-child { padding-right: 0; }
+        }
+
+        .pure-menu-link:hover, .pure-menu-selected > .pure-menu-link {
+            background-color: rgba(0,0,0,0.5);
+            text-decoration: none;
         }
 
         .pure-menu-children {
