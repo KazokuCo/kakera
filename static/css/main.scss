@@ -4,7 +4,7 @@
     background-position: bottom left;
     background-size: 100%;
 
-    @media(max-width: $screen-md-max) {
+    @media(max-width: $screen-sm-max) {
         background-image: none;
     }
 }
