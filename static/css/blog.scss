@@ -135,6 +135,7 @@
 
 .blog-author {
     @include clearfix();
+    padding: 10px;
 
     .blog-author-avatar {
         float: left;
