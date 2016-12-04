@@ -27,7 +27,7 @@
             float: left;
 
             // This is basically a hack to undo pure-menu-horizontal on small screens.
-            @media(max-width: $screen-md-max) {
+            @media(max-width: $screen-sm-max) {
                 float: none;
 
                 .pure-menu-horizontal {
@@ -67,7 +67,7 @@
             float: right;
         }
 
-        @media(max-width: $screen-md-max) {
+        @media(max-width: $screen-sm-max) {
             .nav {
                 display: none;
             }
