@@ -9,18 +9,18 @@
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="og:type" content="{% firstof page.get_og_type 'website' %}" />
-    <meta name="og:url" content="{{ request.build_absolute_uri }}" />
-    <meta name="og:title" content="{{ page.title }}" />
-    <meta name="og:description" content="{% firstof page.get_excerpt site_settings.description %}" />
+    <meta property="og:type" content="{% firstof page.get_og_type 'website' %}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:description" content="{% firstof page.get_excerpt site_settings.description %}" />
 
-    <meta name="fb:app_id" content="{% firstof site_settings.facebook_app_id %}" />
-    <meta name="og:profile_id" content="{% firstof site_settings.facebook_id %}" />
+    <meta property="fb:app_id" content="{% firstof site_settings.facebook_app_id %}" />
+    <meta property="og:profile_id" content="{% firstof site_settings.facebook_id %}" />
 
-    <meta name="twitter:card" content="{% firstof page.get_twitter_card_type 'summary' %}" />
-    <meta name="twitter:site" content="@{{ site_settings.twitter_username }}" />
+    <meta property="twitter:card" content="{% firstof page.get_twitter_card_type 'summary' %}" />
+    <meta property="twitter:site" content="@{{ site_settings.twitter_userproperty }}" />
     {% block og_extra %}
-    <meta name="og:image" content="{% absolute_media_url site_theme_cover_image.url %}" />
+    <meta property="og:image" content="{% absolute_media_url site_theme_cover_image.url %}" />
     {% endblock %}
 
     {% if site_theme %}
