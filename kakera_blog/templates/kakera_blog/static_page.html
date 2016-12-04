@@ -1,5 +1,16 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load kakera_tags wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+
+{% block og_extra %}
+    <meta name="og:rich_attachment" content="true" />
+
+    {% if page.cover_image %}
+        {% image page.cover_image original as cover_image %}
+        <meta name="og:image" content="{% absolute_media_url cover_image.url %}" />
+        <meta name="og:image:width" content="{{ cover_image.width }}" />
+        <meta name="og:image:height" content="{{ cover_image.height }}" />
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container">

@@ -40,3 +40,15 @@ def get_site_theme(site):
 @register.simple_tag
 def get_site_settings(site):
     return site.settings.first()
+
+@register.simple_tag(takes_context=True)
+def absolute_media_url(context, url):
+    if url.startswith('/'):
+        return context['request'].build_absolute_uri(url)
+    return url
+
+@register.filter()
+def force_https(url):
+    if url.startswith('http://'):
+        return "https" + url[4:]
+    return url

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
@@ -35,9 +35,12 @@ class Theme(models.Model):
 @register_snippet
 class Settings(models.Model):
     site = models.ForeignKey('wagtailcore.Site', on_delete=models.PROTECT, related_name='settings')
+    description = models.CharField(max_length=255, blank=True)
 
     twitter_username = models.CharField(max_length=25, blank=True)
     facebook_username = models.CharField(max_length=25, blank=True)
+    facebook_id = models.BigIntegerField(null=True, blank=True)
+    facebook_app_id = models.BigIntegerField(null=True, blank=True)
     patreon_username = models.CharField(max_length=25, blank=True)
     discord_link = models.URLField(max_length=255, blank=True)
 
@@ -45,11 +48,24 @@ class Settings(models.Model):
 
     panels = [
         FieldPanel('site'),
-        FieldPanel('twitter_username'),
-        FieldPanel('facebook_username'),
-        FieldPanel('patreon_username'),
-        FieldPanel('discord_link'),
-        FieldPanel('discourse_url'),
+        FieldPanel('description'),
+        MultiFieldPanel([
+            FieldPanel('twitter_username'),
+        ], "Twitter"),
+        MultiFieldPanel([
+            FieldPanel('facebook_username'),
+            FieldPanel('facebook_id'),
+            FieldPanel('facebook_app_id'),
+        ], "Facebook"),
+        MultiFieldPanel([
+            FieldPanel('patreon_username'),
+        ], "Patreon"),
+        MultiFieldPanel([
+            FieldPanel('discord_link'),
+        ], "Discord"),
+        MultiFieldPanel([
+            FieldPanel('discourse_url'),
+        ], "Discourse")
     ]
 
     def __str__(self):

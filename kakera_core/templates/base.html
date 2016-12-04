@@ -7,6 +7,18 @@
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <meta name="og:type" content="{% firstof page.get_og_type 'website' %}" />
+    <meta name="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta name="og:title" content="{{ page.title }}" />
+    <meta name="og:description" content="{% firstof page.get_excerpt site_settings.description %}" />
+
+    <meta name="fb:app_id" content="{% firstof site_settings.facebook_app_id %}" />
+    <meta name="og:profile_id" content="{% firstof site_settings.facebook_id %}" />
+
+    <meta name="twitter:card" content="{% firstof page.get_twitter_card_type 'summary' %}" />
+    <meta name="twitter:site" content="@{{ site_settings.twitter_username }}" />
+    {% block og_extra %}{% endblock %}
+
     {% if site_theme %}
     {% image site_theme.background original as background_image %}
     {% image site_theme.cover original as cover_image %}

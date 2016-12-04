@@ -63,6 +63,12 @@ class BlogPage(Page):
                 return ' '.join(block.value.split(' ')[:50]) + "..."
         return ""
 
+    def get_embed(self):
+        try:
+            return get_embed(self.cover_embed)
+        except EmbedException:
+            return None
+
     def get_cover_embed_html(self):
         return embed_to_frontend_html(self.cover_embed)
 
@@ -71,6 +77,14 @@ class BlogPage(Page):
             return get_embed(self.cover_embed).thumbnail_url
         except EmbedException:
             return ""
+
+    def get_og_type(self):
+        return "article"
+
+    def get_twitter_card_type(self):
+        if self.cover_embed:
+            return "player"
+        return "summary_large_image"
 
 class BlogIndexPage(Page):
     def get_context(self, request):
@@ -91,3 +105,15 @@ class StaticPage(Page):
         ImageChooserPanel('cover_image'),
         StreamFieldPanel('body'),
     ]
+
+    def get_excerpt(self):
+        for block in self.body:
+            if block.block_type == 'markdown':
+                return ' '.join(block.value.split(' ')[:50]) + "..."
+        return ""
+
+    def get_og_type(self):
+        return "article"
+
+    def get_twitter_card_type(self):
+        return "summary_large_image"
