@@ -1,6 +1,8 @@
 {% load compress kakera_tags wagtailcore_tags wagtailimages_tags wagtailuserbar %}
 {% get_site_theme request.site as site_theme %}
 {% get_site_settings request.site as site_settings %}
+{% image site_theme.background original as site_theme_background_image %}
+{% image site_theme.cover original as site_theme_cover_image %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +19,14 @@
 
     <meta name="twitter:card" content="{% firstof page.get_twitter_card_type 'summary' %}" />
     <meta name="twitter:site" content="@{{ site_settings.twitter_username }}" />
-    {% block og_extra %}{% endblock %}
+    {% block og_extra %}
+    <meta name="og:image" content="{% absolute_media_url site_theme_cover_image.url %}" />
+    {% endblock %}
 
     {% if site_theme %}
-    {% image site_theme.background original as background_image %}
-    {% image site_theme.cover original as cover_image %}
     <style type="text/css">
-    .theme-background { background-image: url("{{ background_image.url }}"); }
-    .theme-cover { background-image: url("{{ cover_image.url }}"); }
+    .theme-background { background-image: url("{{ site_theme_background_image.url }}"); }
+    .theme-cover { background-image: url("{{ site_theme_cover_image.url }}"); }
     {{ site_theme.extra_css|safe }}
     </style>
     {% endif %}
