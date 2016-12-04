@@ -5,7 +5,7 @@
 <div class="container">
     {% for post in blog_entries %}
     <div class="col-sm-6 col-md-4">
-        <div class="blog-box blog-post blog-post-small">
+        <article class="blog-box blog-post blog-post-small">
             <header>
                 <h3><a href="{% pageurl post %}">{{ post.title }}</a></h3>
             </header>
@@ -22,7 +22,7 @@
                 {{ post.get_excerpt|markdown }}
             </section>
             <a href="{% pageurl post %}" class="read-more footer">Read more</a>
-        </div>
+        </article>
     </div>
     {% endfor %}
 </div>
