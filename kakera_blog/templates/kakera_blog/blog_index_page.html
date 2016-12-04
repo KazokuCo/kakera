@@ -5,26 +5,30 @@
 <div class="container">
     {% for post in blog_entries %}
     <div class="col-sm-6 col-md-4">
-        <article class="blog-box blog-post blog-post-small">
+        <article class="blog-box blog-post blog-post-small" itemscope itemtype="http://schema.org/Article">
             <header>
-                <h3><a href="{% pageurl post %}">{{ post.title }}</a></h3>
+                <h3 itemprop="name headline"><a itemprop="url" href="{% pageurl post %}">{{ post.title }}</a></h3>
             </header>
             <section class="post-cover">
                 <a href="{% pageurl post %}">
                 {% if post.cover_image %}
-                    {% image post.cover_image fill-500x300 %}
+                    {% image post.cover_image fill-500x300 itemprop="image" %}
                 {% elif post.cover_embed %}
-                    <div><div class="embed-thumbnail" style="background-image: url({{ post.get_cover_embed_thumbnail_url }});"></div></div>
+                    {% with thumbnail_url=post.get_cover_embed_thumbnail_url %}
+                    <div><div class="embed-thumbnail" style="background-image: url({{ thumbnail_url }});"></div></div>
+                    <meta itemprop="image" content="{{ thumbnail_url }}" />
+                    {% endwith %}
                 {% endif %}
                 </a>
             </section>
-            <section class="blog-item-excerpt">
+            <section class="blog-item-excerpt" itemprop="articleBody">
                 {{ post.get_excerpt|markdown }}
             </section>
             <a href="{% pageurl post %}" class="read-more footer">
                 Read more
-                <span class="blog-item-posted"><i class="fa fa-clock-o"></i> {{ post.published|naturalday }}</span>
+                <span class="blog-item-posted" itemprop="datePublished" datetime="{{ post.published|date:'c' }}"><i class="fa fa-clock-o"></i> {{ post.published|naturalday }}</span>
             </a>
+            <meta itemprop="author" content="{{ post.author.username }}" />
         </article>
     </div>
     {% endfor %}

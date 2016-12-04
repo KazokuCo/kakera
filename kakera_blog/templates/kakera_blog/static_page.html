@@ -13,23 +13,26 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" itemscope itemtype="http://schema.org/Article" itemprop="mainEntity">
+    <link itemprop="mainEntityOfPage" href="{{ request.build_absolute_uri }}" />
     <article class="blog-box blog-post blog-page">
         <header>
-            <h1 class="post-title">{{ page.title }}</h1>
+            <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
         </header>
 
         {% if page.cover_image %}
         <section class="post-cover">
-            {% image page.cover_image original %}
+            {% image page.cover_image original itemprop="image" %}
         </section>
         {% endif %}
 
-        {% for block in page.body %}
-        <section class="block-{{ block.block_type }}">
-            {% include_block block %}
-        </section>
-        {% endfor %}
+        <div itemprop="articleBody">
+            {% for block in page.body %}
+            <section class="block-{{ block.block_type }}">
+                {% include_block block %}
+            </section>
+            {% endfor %}
+        </div>
     </article>
 </div>
 {% endblock %}

@@ -31,31 +31,40 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" itemscope itemtype="http://schema.org/Article" itemprop="mainEntity">
+    <link itemprop="mainEntityOfPage" href="{{ request.build_absolute_uri }}" />
     <article class="blog-box blog-post">
         <header>
-            <h1 class="post-title">{{ page.title }}</h1>
+            <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
         </header>
 
         {% if page.cover_embed %}
         <section class="block-embed post-cover">
             {{ page.get_cover_embed_html|safe }}
+            {% if page.cover_image %}
+                {% image page.cover_image original as cover_image %}
+                <meta itemprop="image" content="{{ cover_image.url }}" />
+            {% else %}
+                <meta itemprop="image" content="{{ page.get_cover_embed_thumbnail_url }}" />
+            {% endif %}
         </section>
         {% elif page.cover_image %}
         <section class="block-image post-cover">
-            {% image page.cover_image original %}
+            {% image page.cover_image original itemprop="image" %}
         </section>
         {% endif %}
 
-        {% for block in page.body %}
-        <section class="block-{{ block.block_type }}">
-            {% include_block block %}
-        </section>
-        {% endfor %}
+        <div itemprop="articleBody">
+            {% for block in page.body %}
+            <section class="block-{{ block.block_type }}">
+                {% include_block block %}
+            </section>
+            {% endfor %}
+        </div>
 
         <footer>
             <span class="post-published">
-                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}">{{ page.published|naturalday }}</abbr>
+                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}" itemprop="datePublished" datetime="{{ post.published|date:'c' }}">{{ page.published|naturalday }}</abbr>
             </span>
             <span class="post-tags">
                 {% for tag in page.tags.all %}
@@ -66,13 +75,13 @@
         </footer>
     </article>
 
-    <div class="blog-box blog-author">
+    <div class="blog-box blog-author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person">
         <div class="blog-author-avatar">
-            <img src="{% gravatar_url page.author.email 200 %}" />
+            <img src="{% gravatar_url page.author.email 200 %}" itemprop="image" />
         </div>
         <div class="blog-author-info">
-            <h3>{{ page.author.get_username }}</h3>
-            <div>{{ page.author.bio|markdown }}</div>
+            <h3 itemprop="name">{{ page.author.get_username }}</h3>
+            <div itemprop="description">{{ page.author.bio|markdown }}</div>
             <div class="links">
                 {% if page.author.twitter %}<a href="https://twitter.com/{{ page.author.twitter }}">@{{ page.author.twitter }}</a>{% endif %}
             </div>
