@@ -135,7 +135,12 @@
 
 .blog-author {
     @include clearfix();
+
     padding: 10px;
+
+    @media(max-width: $screen-sm-max) {
+        padding: 0;
+    }
 
     .blog-author-avatar {
         float: left;
