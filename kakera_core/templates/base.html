@@ -33,9 +33,6 @@
 
         <section class="menu">
             <div class="container clearfix">
-                <div class="nav">
-                    {% top_menu parent=request.site.root_page calling_page=self %}
-                </div>
                 <div class="social">
                     <div class="pure-menu pure-menu-horizontal">
                         <ul class="pure-menu-list">
@@ -51,6 +48,16 @@
                         </ul>
                     </div>
                 </div>
+                <div class="toggle">
+                    <div class="pure-menu">
+                        <ul class="pure-menu-list">
+                            <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="$('#toggle').toggle('slide');">Menu <i class="fa fa-caret-down"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nav" id="toggle">
+                    {% top_menu parent=request.site.root_page calling_page=self %}
+                </div>
             </div>
         </section>
     </header>
@@ -62,6 +69,7 @@
     {% wagtailuserbar %}
 
     {% compress js %}
+    <script type="text/javascript" src="/static/jquery/dist/jquery.js" />
     <script type="text/javascript" src="/static/js/app.js" />
     {% endcompress %}
 </body>

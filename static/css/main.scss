@@ -25,14 +25,67 @@
 
         .nav {
             float: left;
+
+            // This is basically a hack to undo pure-menu-horizontal on small screens.
+            @media(max-width: $screen-md-max) {
+                float: none;
+
+                .pure-menu-horizontal {
+                    width: 100%;
+                    white-space: inherit;
+
+                    .pure-menu-list {
+                        display: block;
+                    }
+
+                    .pure-menu-item, .pure-menu-heading, .pure-menu-separator {
+                        display: inherit;
+                        zoom: inherit;
+                        vertical-align: inherit;
+                    }
+
+                    .pure-menu-has-children > .pure-menu-link:after {
+                        content: "\25B8";
+                    }
+
+                    .pure-menu-children {
+                        left: 100%;
+                        top: 0;
+                        width: 100%;
+                    }
+
+                    .pure-menu-separator {
+                        height: 1px;
+                    }
+                }
+            }
+        }
+        .toggle {
+            display: none;
         }
         .social {
             float: right;
         }
 
+        @media(max-width: $screen-md-max) {
+            .nav {
+                display: none;
+            }
+            .toggle {
+                display: block;
+                overflow: hidden;
+                width: auto;
+            }
+        }
+
         .pure-menu-link {
             padding: 10px 10px;
             color: #eee;
+
+            &:focus {
+                background-color: inherit;
+                text-decoration: none;
+            }
 
             svg {
                 height: 1em;
