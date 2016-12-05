@@ -64,7 +64,7 @@
 
         <footer>
             <span class="post-published">
-                <i class="fa fa-clock-o"></i> <abbr title="{{ page.published }}" itemprop="datePublished" datetime="{{ post.published|date:'c' }}">{{ page.published|naturalday }}</abbr>
+                <i class="fa fa-calendar"></i> <abbr title="{{ page.published }}" itemprop="datePublished" datetime="{{ post.published|date:'c' }}">{{ page.published|naturalday }}</abbr>
             </span>
             <span class="post-tags">
                 {% for tag in page.tags.all %}

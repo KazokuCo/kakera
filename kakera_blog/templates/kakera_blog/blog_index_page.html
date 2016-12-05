@@ -26,7 +26,7 @@
             </section>
             <a href="{% pageurl post %}" class="read-more footer">
                 Read more
-                <span class="blog-item-posted" itemprop="datePublished" datetime="{{ post.published|date:'c' }}"><i class="fa fa-clock-o"></i> {{ post.published|naturalday }}</span>
+                <span class="blog-item-posted" itemprop="datePublished" datetime="{{ post.published|date:'c' }}"><i class="fa fa-calendar"></i> {{ post.published|naturalday }}</span>
             </a>
             <meta itemprop="author" content="{{ post.author.username }}" />
         </article>

@@ -86,11 +86,16 @@
         display: block;
         background: #f4f4f4;
         padding: 20px;
+        line-height: 20px;
     }
 
     img {
         max-width: 100%;
         height: auto;
+    }
+
+    .post-published {
+        float: right;
     }
 
     &.blog-post-small {
