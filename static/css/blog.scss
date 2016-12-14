@@ -101,8 +101,18 @@
         height: auto;
     }
 
-    .post-published {
+    .post-share {
         float: right;
+
+        >* {
+            display: inline-block;
+            vertical-align: bottom;
+            margin-right: 5px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 
     &.blog-post-small {

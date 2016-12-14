@@ -95,4 +95,15 @@
     <script type="text/javascript" src="/static/jquery/dist/jquery.js" />
     <script type="text/javascript" src="/static/js/app.js" />
     {% endcompress %}
+
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId={{ site_settings.facebook_app_id }}";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 </body>
