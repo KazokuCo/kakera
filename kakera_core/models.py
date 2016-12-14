@@ -1,12 +1,17 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+def validate_no_at_prefix(value):
+    if len(value) >= 1 and value[0] == '@':
+        raise ValidationError("please omit the @ prefix")
+
 class User(AbstractUser):
     bio = models.TextField(blank=True)
-    twitter = models.CharField(max_length=15, blank=True)
+    twitter = models.CharField(max_length=15, blank=True, validators=[validate_no_at_prefix])
 
 @register_snippet
 class Theme(models.Model):
