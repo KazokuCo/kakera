@@ -70,6 +70,13 @@ class TestImportGhostUsers(TestCase):
         self.assertEqual("test@example.com", user.email)
         self.assertEqual("Lorem ipsum dolor sit amet.", user.bio)
 
+    def test_import_space_in_username(self):
+        u = self.gen_user(name='User Name', slug='user_name')
+        call_command('import_ghost_users', '-', file=io.StringIO(json.dumps(self.gen_db(u))), stdout=io.StringIO())
+        user = User.objects.get(username='user_name')
+        self.assertEqual("User", user.first_name)
+        self.assertEqual("Name", user.last_name)
+
     def test_import_twitter_invalid(self):
         u = self.gen_user(twitter='@dril')
         call_command('import_ghost_users', '-', file=io.StringIO(json.dumps(self.gen_db(u))), stdout=io.StringIO())

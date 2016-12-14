@@ -18,6 +18,12 @@ class Command(BaseCommand):
                 # self.stdout.write(json.dumps(userdata))
 
                 username = userdata['name']
+                first_name = ""
+                last_name = ""
+                if ' ' in username:
+                    first_name, last_name = username.split(' ', 1)
+                    username = userdata['slug']
+
                 email = userdata['email'] or ""
                 twitter = userdata['twitter'] or ""
                 bio = userdata['bio'] or ""
@@ -32,6 +38,8 @@ class Command(BaseCommand):
                     user = User.objects.create_user(username=username)
                     self.stdout.write("+ {0}".format(username))
 
+                user.first_name = first_name
+                user.last_name = last_name
                 user.email = email
                 user.bio = bio
                 user.twitter = twitter
