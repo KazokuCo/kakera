@@ -18,7 +18,7 @@
     <meta property="og:profile_id" content="{% firstof site_settings.facebook_id %}" />
 
     <meta property="twitter:card" content="{% firstof page.get_twitter_card_type 'summary' %}" />
-    <meta property="twitter:site" content="@{{ site_settings.twitter_userproperty }}" />
+    <meta property="twitter:site" content="@{{ site_settings.twitter_username }}" />
     {% block og_extra %}
     <meta property="og:image" content="{% absolute_media_url site_theme_cover_image.url %}" />
     {% endblock %}
