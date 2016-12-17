@@ -62,6 +62,11 @@ INSTALLED_APPS = [
     'health_check_cache',
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        'wagtail.contrib.wagtailstyleguide',
+    ]
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
