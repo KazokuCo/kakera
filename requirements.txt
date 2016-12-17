@@ -8,3 +8,6 @@ django-compressor
 django-libsass
 django-markdown-deux
 django-gravatar2
+html5lib
+requests
+arrow
