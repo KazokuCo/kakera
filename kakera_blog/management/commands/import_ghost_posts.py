@@ -158,7 +158,11 @@ class Command(BaseCommand):
 
                 body = StreamValue(DefaultStreamBlock(), blocks)
                 if is_page:
-                    page = StaticPage(live=is_live, title=title, slug=slug, body=body)
+                    page = StaticPage(title=title, slug=slug, body=body)
                 else:
-                    page = BlogPage(live=is_live, title=title, slug=slug, published=published, author=user, body=body)
+                    page = BlogPage(title=title, slug=slug, published=published, author=user, body=body)
                 root.add_child(instance=page)
+
+                if not is_live:
+                    page.live = False
+                    page.save()
