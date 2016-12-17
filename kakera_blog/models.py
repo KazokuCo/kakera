@@ -20,10 +20,16 @@ class MarkdownBlock(blocks.TextBlock):
     class Meta:
         template = 'kakera_blog/blocks/markdown.html'
 
+class SteamWidgetBlock(blocks.IntegerBlock):
+    class Meta:
+        template = 'kakera_blog/blocks/steam.html'
+        icon = 'site'
+
 class DefaultStreamBlock(blocks.StreamBlock):
     markdown = MarkdownBlock()
     image = ImageChooserBlock()
     embed = EmbedBlock()
+    steam_widget = SteamWidgetBlock(help_text="Enter a Steam ID, eg. to embed Harmonia (https://store.steampowered.com/app/421660), enter: 421660.")
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('kakera_blog.BlogPage', related_name='tagged_items')
