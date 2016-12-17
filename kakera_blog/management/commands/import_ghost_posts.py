@@ -141,6 +141,7 @@ class Command(BaseCommand):
                 published = arrow.get(post['published_at']).datetime
                 user = users[post['author_id']]
                 is_page = bool(post['page'])
+                is_live = post['status'] == 'published'
 
                 markdown = post['markdown']
                 markdown = re.sub(r'!\[[^\]]*\]\(([^\)]+)\)', '<img src="\\1" />', markdown)
@@ -157,7 +158,7 @@ class Command(BaseCommand):
 
                 body = StreamValue(DefaultStreamBlock(), blocks)
                 if is_page:
-                    page = StaticPage(title=title, slug=slug, body=body)
+                    page = StaticPage(live=is_live, title=title, slug=slug, body=body)
                 else:
-                    page = BlogPage(title=title, slug=slug, published=published, author=user, body=body)
+                    page = BlogPage(live=is_live, title=title, slug=slug, published=published, author=user, body=body)
                 root.add_child(instance=page)
