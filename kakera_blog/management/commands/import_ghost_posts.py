@@ -14,7 +14,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailembeds.blocks import EmbedValue
 from kakera_core.models import User
-from kakera_blog.models import DefaultStreamBlock, BlogPage
+from kakera_blog.models import DefaultStreamBlock, BlogPage, StaticPage
 
 def import_image(url, title):
     r = requests.get(src)
@@ -140,6 +140,7 @@ class Command(BaseCommand):
                 slug = post['slug']
                 published = arrow.get(post['published_at']).datetime
                 user = users[post['author_id']]
+                is_page = bool(post['page'])
 
                 markdown = post['markdown']
                 markdown = re.sub(r'!\[[^\]]*\]\(([^\)]+)\)', '<img src="\\1" />', markdown)
@@ -154,9 +155,9 @@ class Command(BaseCommand):
                 current_text_block = end_text_block(current_text_block, blocks)
                 # print(blocks)
 
-                page = BlogPage(
-                    title=title, slug=slug,
-                    published=published, author=user,
-                    body=StreamValue(DefaultStreamBlock(), blocks),
-                )
+                body = StreamValue(DefaultStreamBlock(), blocks)
+                if is_page:
+                    page = StaticPage(title=title, slug=slug, body=body)
+                else:
+                    page = BlogPage(title=title, slug=slug, published=published, author=user, body=body)
                 root.add_child(instance=page)
