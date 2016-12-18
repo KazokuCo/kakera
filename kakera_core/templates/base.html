@@ -41,7 +41,9 @@
             <div class="container">
                 {% if site_theme %}
                 {% image site_theme.logo original as logo_image %}
-                <img src="{{ logo_image.url }}" id="logo" />
+                <a href="{% pageurl request.site.root_page %}">
+                    <img src="{{ logo_image.url }}" id="logo" />
+                </a>
                 {% endif %}
             </div>
         </section>
