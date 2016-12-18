@@ -13,6 +13,7 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.blocks import StreamValue
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailembeds.blocks import EmbedValue
+from taggit.models import Tag
 from kakera_core.models import User
 from kakera_blog.models import DefaultStreamBlock, BlogPage, StaticPage
 
@@ -120,6 +121,12 @@ def get_users(data):
         users[userdata['id']] = User.objects.get(username=username)
     return users
 
+def get_tags(data):
+    tags = {}
+    for tagdata in data['db'][0]['data']['tags']:
+        tags[tagdata['id']] = Tag.objects.get(slug=tagdata['slug'])
+    return tags
+
 class Command(BaseCommand):
     help = "Imports blog posts from a Ghost database dump"
 
@@ -130,20 +137,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         root = Page.objects.get(pk=options['root_id'])
         data = json.load(options['file'])
-        posts = data['db'][0]['data']['posts']
 
         users = get_users(data)
+        tags = get_tags(data)
 
         with transaction.atomic():
-            for post in posts:
-                title = post['title']
-                slug = post['slug']
-                published = arrow.get(post['published_at']).datetime
-                user = users[post['author_id']]
-                is_page = bool(post['page'])
-                is_live = post['status'] == 'published'
+            for postdata in data['db'][0]['data']['posts']:
+                title = postdata['title']
+                slug = postdata['slug']
+                published = arrow.get(postdata['published_at']).datetime
+                user = users[postdata['author_id']]
+                is_page = bool(postdata['page'])
+                is_live = postdata['status'] == 'published'
 
-                markdown = post['markdown']
+                markdown = postdata['markdown']
                 markdown = re.sub(r'!\[[^\]]*\]\(([^\)]+)\)', '<img src="\\1" />', markdown)
                 tree = html5lib.parse(markdown, treebuilder="dom")
 
@@ -161,8 +168,16 @@ class Command(BaseCommand):
                     page = StaticPage(title=title, slug=slug, body=body)
                 else:
                     page = BlogPage(title=title, slug=slug, published=published, author=user, body=body)
+
+                    for tagdata in data['db'][0]['data']['posts_tags']:
+                        if tagdata['post_id'] == postdata['id']:
+                            tag = tags[tagdata['tag_id']]
+                            print("#" + tag.slug)
+                            page.tags.add(tag)
+
                 root.add_child(instance=page)
 
                 if not is_live:
                     page.live = False
-                    page.save()
+
+                page.save()
