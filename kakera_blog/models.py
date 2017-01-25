@@ -99,7 +99,7 @@ class BlogIndexPage(Page):
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
 
-        posts = BlogPage.objects.child_of(self).live().order_by('-published')
+        posts = BlogPage.objects.child_of(self).live().select_related('author').order_by('-published')
         pages = Paginator(posts, 12)
 
         page_nr = request.GET.get('page', 1)
