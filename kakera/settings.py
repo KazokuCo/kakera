@@ -58,8 +58,8 @@ INSTALLED_APPS = [
     'kakera_blog',
     'debug_toolbar',
     'health_check',
-    'health_check_db',
-    'health_check_cache',
+    'health_check.db',
+    'health_check.cache',
 ]
 
 if DEBUG:
