@@ -1,0 +1,19 @@
+.masonry {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 -5px;
+
+    .masonry-block {
+        padding: 0 5px;
+
+        @media(min-width: $screen-sm-min) {
+            width: (100%/2);
+        }
+
+        @media(min-width: $screen-md-min) {
+            width: (100%/3);
+        }
+    }
+}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -97,7 +98,19 @@ class BlogIndexPage(Page):
 
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
-        context['blog_entries'] = BlogPage.objects.child_of(self).live().order_by('-published')
+
+        posts = BlogPage.objects.child_of(self).live().order_by('-published')
+        pages = Paginator(posts, 12)
+
+        page_nr = request.GET.get('page', 1)
+        try:
+            page = pages.page(page_nr)
+        except PageNotAnInteger:
+            page = pages.page(1)
+        except EmptyPage:
+            page = []
+        context['blog_entries'] = page
+
         return context
 
 class StaticPage(Page):
