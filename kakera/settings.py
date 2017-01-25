@@ -162,6 +162,8 @@ CACHES = {
 
 DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
