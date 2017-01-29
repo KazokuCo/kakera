@@ -245,3 +245,13 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_OFFLINE = True
 
 LIBSASS_PRECISION = 8
+
+
+# Django Markdown Deux
+# https://github.com/trentm/django-markdown-deux
+
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+        "safe_mode": False,
+    }
+}
