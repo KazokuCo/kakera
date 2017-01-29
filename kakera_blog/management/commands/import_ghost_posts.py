@@ -177,15 +177,16 @@ class Command(BaseCommand):
                 current_text_block = end_text_block(current_text_block, blocks)
                 # print(blocks)
 
-                if cover_image is None and blocks[0][0] == 'embed':
-                    cover_embed = blocks[0][1].url
-                    blocks = blocks[1:]
 
                 body = StreamValue(DefaultStreamBlock(), blocks)
                 if is_page:
                     page = StaticPage(title=title, slug=slug, cover_image=cover_image, body=body)
                 else:
-                    page = BlogPage(title=title, slug=slug, cover_image=cover_image, published=published, author=user, body=body)
+                    if cover_image is None and blocks[0][0] == 'embed':
+                        cover_embed = blocks[0][1].url
+                        blocks = blocks[1:]
+
+                    page = BlogPage(title=title, slug=slug, cover_image=cover_image, cover_embed=cover_embed, published=published, author=user, body=body)
 
                     page_tags = []
                     for tagdata in data['db'][0]['data']['posts_tags']:
