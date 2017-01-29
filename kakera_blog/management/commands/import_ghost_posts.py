@@ -17,11 +17,16 @@ from taggit.models import Tag
 from kakera_core.models import User
 from kakera_blog.models import DefaultStreamBlock, BlogPage, StaticPage
 
-def import_image(url, title):
-    r = requests.get(src)
-    image = Image(title=title, file=ImageFile(io.BytesIO(r.content)))
-    image.save()
-    return image
+def import_image(url):
+    r = requests.get(url)
+    if r.status_code == 403:
+        print("# BROKEN IMAGE: " + url)
+        return None
+    filename = url.split('/')[-1]
+    f = ImageFile(io.BytesIO(r.content), name=filename)
+    img = Image(title=filename, file=f)
+    img.save()
+    return img
 
 def end_text_block(text, blocks):
     text = text.strip()
@@ -58,11 +63,12 @@ def handle_node(node, current_text_block, blocks):
             title = node.getAttribute('title') or node.getAttribute('alt') or filename
 
             print("    --> Image: " + src)
-            # img = import_image(src, title)
+            img = import_image(src)
 
             # if not node.getAttribute('class'):
-            #     current_text_block = end_text_block(current_text_block, blocks)
-            #     blocks.append(('image', img))
+            if img is not None:
+                current_text_block = end_text_block(current_text_block, blocks)
+                blocks.append(('image', img))
             # else:
             #     node.setAttribute('src', img.usage_url)
             #     print(node.toxml())
@@ -141,15 +147,23 @@ class Command(BaseCommand):
         users = get_users(data)
         tags = get_tags(data)
 
-        with transaction.atomic():
-            for postdata in data['db'][0]['data']['posts']:
+        for postdata in data['db'][0]['data']['posts']:
+            with transaction.atomic():
                 title = postdata['title']
                 slug = postdata['slug']
+                image_url = postdata['image']
                 published = arrow.get(postdata['published_at']).datetime
                 user = users[postdata['author_id']]
                 is_page = bool(postdata['page'])
                 is_live = postdata['status'] == 'published'
 
+                if BlogPage.objects.filter(slug=slug).count() > 0 or StaticPage.objects.filter(slug=slug).count() > 0:
+                    continue
+
+                if image_url and image_url.startswith('//'):
+                    image_url = 'https:' + image_url
+                cover_image = import_image(image_url) if image_url else None
+                cover_embed = ""
                 markdown = postdata['markdown']
                 markdown = re.sub(r'!\[[^\]]*\]\(([^\)]+)\)', '<img src="\\1" />', markdown)
                 tree = html5lib.parse(markdown, treebuilder="dom")
@@ -163,21 +177,40 @@ class Command(BaseCommand):
                 current_text_block = end_text_block(current_text_block, blocks)
                 # print(blocks)
 
+                if cover_image is None and blocks[0][0] == 'embed':
+                    cover_embed = blocks[0][1].url
+                    blocks = blocks[1:]
+
                 body = StreamValue(DefaultStreamBlock(), blocks)
                 if is_page:
-                    page = StaticPage(title=title, slug=slug, body=body)
+                    page = StaticPage(title=title, slug=slug, cover_image=cover_image, body=body)
                 else:
-                    page = BlogPage(title=title, slug=slug, published=published, author=user, body=body)
+                    page = BlogPage(title=title, slug=slug, cover_image=cover_image, published=published, author=user, body=body)
 
+                    page_tags = []
                     for tagdata in data['db'][0]['data']['posts_tags']:
                         if tagdata['post_id'] == postdata['id']:
                             tag = tags[tagdata['tag_id']]
                             print("#" + tag.slug)
                             page.tags.add(tag)
+                            page_tags.append(tag)
+                    if cover_image:
+                        print("-> tagging cover")
+                        for tag in page_tags:
+                            cover_image.tags.add(tag)
+                        cover_image.save()
+                    for block in page.body:
+                        if block.block_type == 'image':
+                            print("-> tagging: {}".format(block.value))
+                            for tag in page_tags:
+                                block.value.tags.add(tag)
+                            block.value.save()
 
                 root.add_child(instance=page)
 
                 if not is_live:
                     page.live = False
 
+                if cover_image:
+                    cover_image.save()
                 page.save()

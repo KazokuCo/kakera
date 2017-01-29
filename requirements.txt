@@ -2,12 +2,14 @@ django >= 1.10, < 1.11
 wagtail < 2.0
 django-redis
 hiredis
+django-storages
 django-health-check
 django-debug-toolbar
 django-compressor
 django-libsass
 django-markdown-deux
 django-gravatar2
+boto3
 html5lib
 requests
 arrow
