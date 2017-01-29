@@ -250,8 +250,13 @@ LIBSASS_PRECISION = 8
 # Django Markdown Deux
 # https://github.com/trentm/django-markdown-deux
 
+import re
+
 MARKDOWN_DEUX_STYLES = {
     "default": {
         "safe_mode": False,
+        "extras": {
+            "smarty-pants": None,
+        },
     }
 }
