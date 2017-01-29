@@ -153,10 +153,12 @@
         }
         .read-more {
             color: #666;
+            border-top: 1px solid #eee;
 
-            &:hover {
+            &:hover, &:active {
                 text-decoration: none;
                 background-color: #ddd;
+                border-top-color: #ddd;
             }
         }
     }
