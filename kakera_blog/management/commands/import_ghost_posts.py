@@ -83,7 +83,7 @@ def handle_node(node, current_text_block, blocks):
             src = node.getAttribute('src')
             url = urlparse(src)
             if "youtube.com" in url.netloc:
-                video_url = "https://youtube.com/" + url.path.rstrip('/').split('/')[-1]
+                video_url = "https://youtu.be/" + url.path.rstrip('/').split('/')[-1]
                 # print("Youtube Embed: " + video_url)
                 blocks.append(('embed', EmbedValue(video_url)))
             elif "facebook.com/plugins/post.php" in url.netloc:
