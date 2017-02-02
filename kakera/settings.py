@@ -101,6 +101,15 @@ TEMPLATES = [
     },
 ]
 
+if not DEBUG:
+    TEMPLATES[0]['APP_DIRS'] = None
+    TEMPLATES[0]['OPTIONS']['loaders'] = [
+        ('django.template.loaders.cached.Loader', [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ]),
+    ]
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
