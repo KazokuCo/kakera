@@ -51,6 +51,8 @@ class Settings(models.Model):
 
     discourse_url = models.URLField(max_length=255, blank=True)
 
+    cloudflare_zone_id = models.CharField(max_length=32, blank=True)
+
     panels = [
         FieldPanel('site'),
         FieldPanel('description'),
@@ -70,7 +72,10 @@ class Settings(models.Model):
         ], "Discord"),
         MultiFieldPanel([
             FieldPanel('discourse_url'),
-        ], "Discourse")
+        ], "Discourse"),
+        MultiFieldPanel([
+            FieldPanel('cloudflare_zone_id'),
+        ], "Cloudflare"),
     ]
 
     def __str__(self):

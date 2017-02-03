@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
+    'wagtail.contrib.wagtailfrontendcache',
     'modelcluster',
     'taggit',
     'compressor',
@@ -170,6 +171,14 @@ CACHES = {
     }
 }
 
+WAGTAILFRONTENDCACHE = {
+    'cloudfront': {
+        'BACKEND': 'kakera_core.ext.cloudflare.frontend_cache.CloudflareBackend',
+        'EMAIL': os.environ.get('CLOUDFLARE_EMAIL', ''),
+        'TOKEN': os.environ.get('CLOUDFLARE_TOKEN', ''),
+    },
+}
+
 DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -219,7 +228,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 
-DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
+DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE',
+                            'django.core.files.storage.FileSystemStorage')
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
