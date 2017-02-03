@@ -1,4 +1,4 @@
-{% load compress kakera_tags wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load compress kakera_tags wagtailcore_tags wagtailimages_tags %}
 {% get_site_theme request.site as site_theme %}
 {% get_site_settings request.site as site_settings %}
 {% image site_theme.background original as site_theme_background_image %}
@@ -90,8 +90,6 @@
     {% block content %}
     <p>Please override the <code>content</code> block.</p>
     {% endblock %}
-
-    {% wagtailuserbar %}
 
     {% compress js %}
     <script type="text/javascript" src="/static/jquery/dist/jquery.js" />

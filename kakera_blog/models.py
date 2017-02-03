@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import redirect
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -13,6 +14,7 @@ from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailembeds.format import embed_to_frontend_html
 from wagtail.wagtailembeds.embeds import get_embed
 from wagtail.wagtailembeds.exceptions import EmbedException
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -35,7 +37,7 @@ class DefaultStreamBlock(blocks.StreamBlock):
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('kakera_blog.BlogPage', related_name='tagged_items')
 
-class BlogPage(Page):
+class BlogPage(RoutablePageMixin, Page):
     published = models.DateTimeField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
@@ -63,6 +65,11 @@ class BlogPage(Page):
     # Only allow blog posts under index pages, disallow subpages
     parent_page_types = ['kakera_blog.BlogIndexPage']
     subpage_types = []
+
+    # Redirect /edit to the admin edit form.
+    @route(r'^edit/$')
+    def edit(self, request):
+        return redirect('wagtailadmin_pages:edit', self.pk)
 
     def get_excerpt(self):
         for block in self.body:
