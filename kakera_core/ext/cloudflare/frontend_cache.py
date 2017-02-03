@@ -1,7 +1,10 @@
+import logging
 from urllib.parse import urlparse
 
 from wagtail.wagtailcore.models import Site
 from wagtail.contrib.wagtailfrontendcache.backends import CloudflareBackend as BaseCloudflareBackend
+
+logger = logging.getLogger(__name__)
 
 def zone_id_for_url(url):
     parts = urlparse(url)
@@ -23,6 +26,7 @@ class CloudflareBackend(BaseCloudflareBackend):
             return
 
         zone_id = zone_id_for_url(url)
+        logger.info("zone=%s for url=%s", zone_id, url)
         if zone_id:
             backend = BaseCloudflareBackend({
                 'EMAIL': self.cloudflare_email,
