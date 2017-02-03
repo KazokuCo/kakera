@@ -1,4 +1,6 @@
+from django.dispatch import receiver
 from django.db import models
+from django.db.models.signals import pre_delete
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
@@ -6,6 +8,7 @@ from django.shortcuts import redirect
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.signals import page_published
 from wagtail.wagtailsearch import index
 from wagtail.wagtailadmin.edit_handlers import MultiFieldPanel, FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -15,6 +18,7 @@ from wagtail.wagtailembeds.format import embed_to_frontend_html
 from wagtail.wagtailembeds.embeds import get_embed
 from wagtail.wagtailembeds.exceptions import EmbedException
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
+from wagtail.contrib.wagtailfrontendcache.utils import purge_page_from_cache
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -99,6 +103,18 @@ class BlogPage(RoutablePageMixin, Page):
         if self.cover_embed:
             return "player"
         return "summary_large_image"
+
+def blog_page_changed(page):
+    for index_page in BlogIndexPage.objects.ancestor_of(page):
+        purge_page_from_cache(index_page)
+
+@receiver(page_published, sender=BlogPage)
+def blog_published_handler(instance, **kwargs):
+    blog_page_changed(instance)
+
+@receiver(pre_delete, sender=BlogPage)
+def blog_deleted_handler(instance, **kwargs):
+    blog_page_changed(instance)
 
 class BlogIndexPage(Page):
     parent_page_types = ['wagtailcore.Page']
