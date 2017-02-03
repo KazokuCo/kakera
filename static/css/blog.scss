@@ -80,6 +80,10 @@
             }
         }
 
+        .twitter-tweet {
+            margin: auto;
+        }
+
         @media(max-width: $screen-md-max) {
             box-shadow: none;
             padding-left: 0;
