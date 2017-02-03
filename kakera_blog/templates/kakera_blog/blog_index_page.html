@@ -7,9 +7,6 @@
         {% for post in blog_entries %}
         <div class="masonry-block">
             <article class="blog-box blog-post blog-post-small" itemscope itemtype="http://schema.org/Article">
-                <header>
-                    <h3 itemprop="name headline"><a itemprop="url" href="{% pageurl post %}">{{ post.title }}</a></h3>
-                </header>
                 <section class="post-cover">
                     <a href="{% pageurl post %}">
                     {% if post.cover_image %}
@@ -22,6 +19,9 @@
                     {% endif %}
                     </a>
                 </section>
+                <header>
+                    <h3 itemprop="name headline"><a itemprop="url" href="{% pageurl post %}">{{ post.title }}</a></h3>
+                </header>
                 <section class="blog-item-excerpt" itemprop="articleBody">
                     {{ post.get_excerpt|markdown }}
                 </section>
