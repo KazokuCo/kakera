@@ -178,7 +178,7 @@ CACHES = {
 }
 
 WAGTAILFRONTENDCACHE = {
-    'cloudfront': {
+    'cloudflare': {
         'BACKEND': 'kakera_core.ext.cloudflare.frontend_cache.CloudflareBackend',
         'EMAIL': os.environ.get('CLOUDFLARE_EMAIL', ''),
         'TOKEN': os.environ.get('CLOUDFLARE_TOKEN', ''),

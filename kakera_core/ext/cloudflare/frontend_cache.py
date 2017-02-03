@@ -33,5 +33,6 @@ class CloudflareBackend(BaseCloudflareBackend):
                 'TOKEN': self.cloudflare_token,
                 'ZONEID': zone_id,
             })
-            backend.purge(url.replace('https://', 'http://'))
-            backend.purge(url.replace('http://', 'https://'))
+            for u in [url, url.replace('http://', 'https://')]:
+                logger.info("-> purging: %s", u)
+                backend.purge(u)
