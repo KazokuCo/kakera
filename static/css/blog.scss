@@ -104,10 +104,29 @@
     .post-share {
         float: right;
 
-        >* {
-            display: inline-block;
-            vertical-align: bottom;
+        >a {
+            color: #fff;
+            font-size: 12px;
+            border-radius: 3px;
+            padding: 3px 5px;
             margin-right: 5px;
+
+            &:hover, &:active {
+                text-decoration: none;
+            }
+
+            &.twitter {
+                background-color: #326ada;
+                &:hover {
+                    background-color: darken(#326ada, 10%);
+                }
+            }
+            &.facebook {
+                background-color: #3b5998;
+                &:hover {
+                    background-color: darken(#3b5998, 10%);
+                }
+            }
 
             &:last-child {
                 margin-right: 0;

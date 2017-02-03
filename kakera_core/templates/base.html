@@ -76,7 +76,7 @@
                 <div class="toggle">
                     <div class="pure-menu">
                         <ul class="pure-menu-list">
-                            <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="$('#toggle').toggle('slide');">Menu <i class="fa fa-caret-down"></i></a></li>
+                            <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="$('#toggle').toggle('slide');return false">Menu <i class="fa fa-caret-down"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -92,19 +92,8 @@
     {% endblock %}
 
     {% compress js %}
-    <script type="text/javascript" src="/static/jquery/dist/jquery.js" />
-    <script type="text/javascript" src="/static/turbolinks/dist/turbolinks.js" />
-    <script type="text/javascript" src="/static/js/app.js" />
+    <script type="text/javascript" src="/static/jquery/dist/jquery.js" data-turbolinks-eval="false"></script>
+    <script type="text/javascript" src="/static/turbolinks/dist/turbolinks.js" data-turbolinks-eval="false"></script>
+    <script type="text/javascript" src="/static/js/app.js" data-turbolinks-eval="false"></script>
     {% endcompress %}
-
-    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId={{ site_settings.facebook_app_id }}";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
 </body>
