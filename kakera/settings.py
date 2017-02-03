@@ -177,6 +177,8 @@ CACHES = {
     }
 }
 
+CACHE_MIDDLEWARE_SECONDS = 60*60
+
 WAGTAILFRONTENDCACHE = {
     'cloudflare': {
         'BACKEND': 'kakera_core.ext.cloudflare.frontend_cache.CloudflareBackend',
