@@ -245,6 +245,8 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN', None)
 AWS_QUERYSTRING_AUTH = False
 
+WAGTAILIMAGES_IMAGE_MODEL = 'kakera_core.CustomImage'
+
 
 # Wagtail
 # http://docs.wagtail.io/en/v1.7/advanced_topics/settings.html

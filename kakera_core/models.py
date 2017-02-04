@@ -1,8 +1,11 @@
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
+from wagtail.wagtailimages.models import Image as BaseImage, AbstractImage, AbstractRendition
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 def validate_no_at_prefix(value):
@@ -13,15 +16,38 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)
     twitter = models.CharField(max_length=15, blank=True, validators=[validate_no_at_prefix])
 
+
+
+class CustomImage(AbstractImage):
+    admin_form_fields = BaseImage.admin_form_fields
+
+class CustomRendition(AbstractRendition):
+    image = models.ForeignKey(CustomImage, related_name='renditions')
+
+    class Meta:
+        unique_together = (
+            ('image', 'filter_spec', 'focal_point_key'),
+        )
+
+@receiver(post_delete, sender=CustomImage)
+def image_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
+
+@receiver(post_delete, sender=CustomRendition)
+def rendition_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
+
+
+
 @register_snippet
 class Theme(models.Model):
     name = models.CharField(max_length=250)
     site = models.ForeignKey('wagtailcore.Site', on_delete=models.PROTECT, related_name='themes')
     active = models.BooleanField(default=False)
 
-    logo = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
-    cover = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
-    background = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    logo = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    cover = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    background = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     extra_css = models.TextField(blank=True)
 
     panels = [
@@ -36,6 +62,8 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
 @register_snippet
 class Settings(models.Model):

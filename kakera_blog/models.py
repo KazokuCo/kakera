@@ -45,7 +45,7 @@ class BlogPage(RoutablePageMixin, Page):
     published = models.DateTimeField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    cover_image = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     cover_embed = models.CharField(max_length=1000, null=True, blank=True)
 
     body = StreamField(DefaultStreamBlock())
@@ -137,7 +137,7 @@ class BlogIndexPage(Page):
         return context
 
 class StaticPage(Page):
-    cover_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    cover_image = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
 
     body = StreamField(DefaultStreamBlock())
 

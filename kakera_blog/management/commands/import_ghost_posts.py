@@ -11,10 +11,10 @@ from django.core.files.images import ImageFile
 from django.db import transaction
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailimages.models import Image
+# from wagtail.wagtailimages.models import Image
 from wagtail.wagtailembeds.blocks import EmbedValue
 from taggit.models import Tag
-from kakera_core.models import User
+from kakera_core.models import User, CustomImage
 from kakera_blog.models import DefaultStreamBlock, BlogPage, StaticPage
 
 def import_image(url):
@@ -24,7 +24,7 @@ def import_image(url):
         return None
     filename = url.split('/')[-1]
     f = ImageFile(io.BytesIO(r.content), name=filename)
-    img = Image(title=filename, file=f)
+    img = CustomImage(title=filename, file=f)
     img.save()
     return img
 

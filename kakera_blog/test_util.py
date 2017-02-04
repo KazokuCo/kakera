@@ -1,6 +1,6 @@
 from django.test import TestCase
 from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailimages.models import Image
+from kakera_core.models import CustomImage
 from kakera_blog.models import DefaultStreamBlock
 from kakera_blog.util import count_words, calc_read_time
 
@@ -51,17 +51,17 @@ Integer venenatis semper nisi non varius. Mauris luctus felis lacus, a rhoncus l
     def test_one_minute_plus_cover(self):
         self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), [
             ('markdown', self.TEXT_1MIN),
-        ]), Image()), 72)
+        ]), CustomImage()), 72)
 
     def test_image(self):
         self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), [
-            ('image', Image()),
+            ('image', CustomImage()),
         ])), 12)
 
     def test_image_with_cover(self):
         self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), [
-            ('image', Image()),
-        ]), Image()), 23)
+            ('image', CustomImage()),
+        ]), CustomImage()), 23)
 
     def test_images(self):
         times = {
@@ -83,7 +83,7 @@ Integer venenatis semper nisi non varius. Mauris luctus felis lacus, a rhoncus l
             15: 12+11+10+9+8+7+6+5+4+3+3+3+3+3+3,
         }
         for n, t in times.items():
-            blocks = [('image', Image()) for _ in range(n)]
+            blocks = [('image', CustomImage()) for _ in range(n)]
             self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), blocks)), t)
 
     def test_images_with_cover(self):
@@ -106,5 +106,5 @@ Integer venenatis semper nisi non varius. Mauris luctus felis lacus, a rhoncus l
             15: 12+11+10+9+8+7+6+5+4+3+3+3+3+3+3+3,
         }
         for n, t in times.items():
-            blocks = [('image', Image()) for _ in range(n)]
-            self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), blocks), Image()), t)
+            blocks = [('image', CustomImage()) for _ in range(n)]
+            self.assertEqual(calc_read_time(StreamValue(DefaultStreamBlock(), blocks), CustomImage()), t)
