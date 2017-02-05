@@ -165,10 +165,7 @@ class StaticPage(Page):
     ]
 
     def get_excerpt(self):
-        for block in self.body:
-            if block.block_type == 'markdown':
-                return ' '.join(block.value.split(' ')[:50]) + "..."
-        return ""
+        return self.excerpt
 
     def get_og_type(self):
         return "article"
