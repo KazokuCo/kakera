@@ -3,18 +3,24 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 0 -5px;
+    margin: 0 0;
 
     .masonry-block {
         padding: 0;
         width: 100%;
+    }
 
-        @media(min-width: $screen-sm-min) {
-            padding: 0 10px;
+    @media(min-width: $screen-sm-min) {
+        margin: 0 -5px;
+        .masonry-block {
+            padding: 0 5px;
             width: (100%/2);
         }
+    }
 
-        @media(min-width: $screen-md-min) {
+    @media(min-width: $screen-md-min) {
+        margin: 0 -10px;
+        .masonry-block {
             padding: 0 10px;
             width: (100%/3);
         }
