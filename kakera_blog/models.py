@@ -110,7 +110,7 @@ class BlogPage(RoutablePageMixin, Page):
     def save(self, *args, **kwargs):
         self.cooked = get_template("kakera_blog/_blog_page_cooked.html").render({'page': self})
         self.excerpt = ' '.join(html.fromstring(self.cooked)\
-            .text_content().split(' ')[:50]).rstrip('.') + '...'
+            .text_content().split(' ')[:50]).strip().rstrip('.') + '...'
 
         super(BlogPage, self).save(*args, **kwargs)
 
