@@ -35,23 +35,8 @@
         {% endfor %}
     </div>
 
-    <nav aria-label="...">
-        <ul class="pager">
-            {% if blog_entries.has_previous %}
-            <li><a href="{% if blog_entries.previous_page_number != 1 %}?page={{ blog_entries.previous_page_number }}{% else %}.{% endif %}">
-            {% else %}
-            <li class="disabled"><a>
-            {% endif %}
-                <span aria-hidden="true">&larr;</span>&nbsp;Previous
-            </a></li>
-            {% if blog_entries.has_next %}
-            <li><a href="?page={{ blog_entries.next_page_number }}">
-            {% else %}
-            <li class="disabled"><a>
-            {% endif %}
-                Next&nbsp;<span aria-hidden="true">&rarr;</span>
-            </a></li>
-        </ul>
-    </nav>
+    {% if blog_entries.has_next %}
+        <a class="next-page" href="?page={{ blog_entries.next_page_number }}">Next&nbsp;&rarr;</a>
+    {% endif %}
 </div>
 {% endblock %}
