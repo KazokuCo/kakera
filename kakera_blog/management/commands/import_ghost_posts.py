@@ -16,6 +16,7 @@ from wagtail.wagtailembeds.blocks import EmbedValue
 from taggit.models import Tag
 from kakera_core.models import User, CustomImage
 from kakera_blog.models import DefaultStreamBlock, BlogPage, StaticPage
+from kakera_core.management.commands.import_ghost_users import USERNAME_OVERRIDES
 
 def import_image(url):
     r = requests.get(url)
@@ -124,6 +125,7 @@ def get_users(data):
     users = {}
     for userdata in data['db'][0]['data']['users']:
         username = userdata['name'] if ' ' not in userdata['name'] else userdata['slug']
+        username = USERNAME_OVERRIDES.get(username, username)
         users[userdata['id']] = User.objects.get(username=username)
     return users
 
