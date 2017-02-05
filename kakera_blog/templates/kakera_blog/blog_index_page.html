@@ -38,7 +38,7 @@
     <nav aria-label="...">
         <ul class="pager">
             {% if blog_entries.has_previous %}
-            <li><a href="?page={{ blog_entries.previous_page_number }}">
+            <li><a href="{% if blog_entries.previous_page_number != 1 %}?page={{ blog_entries.previous_page_number }}{% else %}.{% endif %}">
             {% else %}
             <li class="disabled"><a>
             {% endif %}
