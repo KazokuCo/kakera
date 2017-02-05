@@ -74,7 +74,8 @@ if DEBUG:
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
+    'kakera_core.middleware.set_cache_headers.set_cache_headers',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,7 +85,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'kakera.urls'
@@ -177,10 +178,10 @@ CACHES = {
             'PARSER_CLASS': 'redis.connection.HiredisParser',
             'IGNORE_EXCEPTIONS': True,
         }
-    }
+    },
 }
 
-CACHE_MIDDLEWARE_SECONDS = 60*60
+CACHE_MIDDLEWARE_SECONDS = 60*60*24*30
 
 WAGTAILFRONTENDCACHE = {
     'cloudflare': {
@@ -192,7 +193,7 @@ WAGTAILFRONTENDCACHE = {
 
 DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 
 # Password validation

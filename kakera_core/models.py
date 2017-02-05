@@ -1,7 +1,8 @@
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
+from django.core.cache import cache
 from django.contrib.auth.models import AbstractUser
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
@@ -63,6 +64,10 @@ class Theme(models.Model):
     def __str__(self):
         return self.name
 
+@receiver(post_save, sender=Theme)
+def theme_save(sender, instance, **kwargs):
+    cache.clear()
+
 
 
 @register_snippet
@@ -108,3 +113,7 @@ class Settings(models.Model):
 
     def __str__(self):
         return "Settings for {0}".format(self.site)
+
+@receiver(post_save, sender=Theme)
+def theme_save(sender, instance, **kwargs):
+    cache.clear()

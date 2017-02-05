@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.template.loader import get_template
 
@@ -117,13 +118,14 @@ class BlogPage(RoutablePageMixin, Page):
 def blog_page_changed(page):
     for index_page in BlogIndexPage.objects.ancestor_of(page):
         purge_page_from_cache(index_page)
+    cache.clear()
 
 @receiver(page_published, sender=BlogPage)
-def blog_published_handler(instance, **kwargs):
+def blog_page_published(instance, **kwargs):
     blog_page_changed(instance)
 
 @receiver(pre_delete, sender=BlogPage)
-def blog_deleted_handler(instance, **kwargs):
+def blog_page_deleted(instance, **kwargs):
     blog_page_changed(instance)
 
 class BlogIndexPage(Page):
@@ -179,3 +181,14 @@ class StaticPage(Page):
             .text_content().split(' ')[:50]).rstrip('.') + '...'
 
         super(StaticPage, self).save(*args, **kwargs)
+
+def static_page_changed(page):
+    cache.clear()
+
+@receiver(page_published, sender=StaticPage)
+def static_page_published(instance, **kwargs):
+    static_page_changed(instance)
+
+@receiver(pre_delete, sender=StaticPage)
+def static_page_deleted(instance, **kwargs):
+    static_page_changed(instance)
