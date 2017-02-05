@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Alegreya Sans');
 @import url('https://fonts.googleapis.com/css?family=Libre Franklin');
+@import url('https://fonts.googleapis.com/css?family=Lora');
 
 .blog-box {
     background: #fff;
@@ -23,11 +23,12 @@
         margin-bottom: 1em;
         padding: 0 10px;
 
-        font-family: "Alegreya Sans", "Comic Sans", "Comic Sans MS", monospace;
-        font-size: 21px;
-        font-weight: 400;
-        line-height: 1.45;
-        letter-spacing: -0.002em;
+        font-family: "Lora", "Comic Sans", "Comic Sans MS", monospace;
+        font-size: 18px;
+        // font-weight: 400;
+        font-weight: lighter;
+        line-height: 1.5;
+        // letter-spacing: -0.002em;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -36,12 +37,14 @@
 
         h1, h2, h3, h4, h5, h6 {
             font-family: "Libre Franklin", sans-serif;
+            font-weight: bold;
         }
 
         h1 { font-size: 2em; }
         h2 { font-size: 1.75em; }
-        h3 { font-size: 1.6em; }
         h3 { font-size: 1.5em; }
+        h4 { font-size: 1.25em; }
+        h5 { font-size: 1em; }
 
         p {
             margin-bottom: 1.5em;
