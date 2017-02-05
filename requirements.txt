@@ -11,6 +11,7 @@ django-markdown-deux
 django-gravatar2
 boto3
 html5lib
+lxml
 requests
 arrow
 python-dotenv

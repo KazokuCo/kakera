@@ -23,7 +23,7 @@
                     <h3 itemprop="name headline"><a itemprop="url" href="{% pageurl post %}">{{ post.title }}</a></h3>
                 </header>
                 <section class="blog-item-excerpt" itemprop="articleBody">
-                    {{ post.get_excerpt|markdown }}
+                    {{ post.get_excerpt|safe }}
                 </section>
                 <a href="{% pageurl post %}" class="read-more footer">
                     Read more
