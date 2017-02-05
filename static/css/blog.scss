@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Libre Franklin');
-@import url('https://fonts.googleapis.com/css?family=Lora');
+@import url('https://fonts.googleapis.com/css?family=Source Serif Pro');
+@import url('https://fonts.googleapis.com/css?family=Source Sans Pro');
 
 .blog-box {
     background: #fff;
@@ -23,11 +23,11 @@
         margin-bottom: 1em;
         padding: 0 10px;
 
-        font-family: "Lora", "Comic Sans", "Comic Sans MS", monospace;
+        font-family: "Source Sans Pro", "Comic Sans", "Comic Sans MS", monospace;
         font-size: 18px;
         // font-weight: 400;
-        font-weight: lighter;
-        line-height: 1.5;
+        // font-weight: lighter;
+        line-height: 1.45;
         // letter-spacing: -0.002em;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
@@ -36,7 +36,7 @@
         word-wrap: break-word;
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: "Libre Franklin", sans-serif;
+            font-family: "Source Serif Pro", sans-serif;
             font-weight: bold;
         }
 
