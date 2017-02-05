@@ -4,6 +4,11 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from kakera_core.models import User
 
+USERNAME_OVERRIDES = {
+    'elizabeth': 'kyuketsukimiyu',
+    'emily': 'uppfinnarn',
+}
+
 class Command(BaseCommand):
     help = "Imports users from a Ghost database dump"
 
@@ -23,6 +28,7 @@ class Command(BaseCommand):
                 if ' ' in username:
                     first_name, last_name = username.split(' ', 1)
                     username = userdata['slug']
+                username = USERNAME_OVERRIDES.get(username, username)
 
                 email = userdata['email'] or ""
                 twitter = userdata['twitter'] or ""
