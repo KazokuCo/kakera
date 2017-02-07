@@ -291,7 +291,6 @@ MARKDOWN_DEUX_STYLES = {
         "extras": {
             "code-friendly": None,
             "smarty-pants": None,
-            "tag-friendly": None,
         },
     }
 }
