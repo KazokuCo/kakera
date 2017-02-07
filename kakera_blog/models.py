@@ -109,8 +109,8 @@ class BlogPage(RoutablePageMixin, Page):
         return "summary_large_image"
 
     def save(self, *args, **kwargs):
-        self.cooked = get_template("kakera_blog/_blog_page_cooked.html").render({'page': self})
-        self.excerpt = ' '.join(html.fromstring(self.cooked)\
+        self.cooked = str(get_template("kakera_blog/_blog_page_cooked.html").render({'page': self}))
+        self.excerpt = ' '.join(html.fromstring(self.cooked.encode('utf-8'))\
             .text_content().split(' ')[:50]).strip().rstrip('.') + '...'
 
         super(BlogPage, self).save(*args, **kwargs)
