@@ -36,8 +36,11 @@
         word-wrap: break-word;
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: "Libre Franklin", sans-serif;
             font-weight: bold;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Libre Franklin", sans-serif;
             margin-bottom: 0.5em;
         }
 
@@ -45,7 +48,8 @@
         h2 { font-size: 1.75em; }
         h3 { font-size: 1.5em; }
         h4 { font-size: 1.25em; }
-        h5 { font-size: 1em; }
+        h5 { font-size: 1.1em; }
+        h6 { font-size: 0.85em; }
 
         p {
             margin-bottom: 1.5em;
