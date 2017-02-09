@@ -148,7 +148,7 @@ class BlogIndexPage(Page):
 
         return context
 
-class StaticPage(Page):
+class StaticPage(RoutablePageMixin, Page):
     cover_image = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
 
     body = StreamField(DefaultStreamBlock())
@@ -165,6 +165,11 @@ class StaticPage(Page):
         ImageChooserPanel('cover_image'),
         StreamFieldPanel('body'),
     ]
+
+    # Redirect /edit to the admin edit form.
+    @route(r'^edit/$')
+    def edit(self, request):
+        return redirect('wagtailadmin_pages:edit', self.pk)
 
     def get_excerpt(self):
         return self.excerpt
