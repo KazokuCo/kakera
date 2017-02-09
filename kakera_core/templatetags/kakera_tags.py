@@ -1,5 +1,6 @@
 # Some of these are shamelessly stolen from the wagtail demo project:
 # https://github.com/torchbox/wagtaildemo/blob/master/demo/templatetags/demo_tags.py
+import re
 from django import template
 
 register = template.Library()
@@ -52,3 +53,9 @@ def force_https(url):
     if url.startswith('http://'):
         return "https" + url[4:]
     return url
+
+# PARSE MARKDOWN WITH REGEX
+MARKDOWN_LINEBREAKS_RE = re.compile(r'(?<!\n)\n(?!\n)', flags=re.MULTILINE)
+@register.filter(is_safe=True)
+def markdown_linebreaks(s):
+    return MARKDOWN_LINEBREAKS_RE.sub('<br/>\n', s)
