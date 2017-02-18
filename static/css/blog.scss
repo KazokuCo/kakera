@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo');
 @import url('https://fonts.googleapis.com/css?family=Libre Franklin');
 @import url('https://fonts.googleapis.com/css?family=Source Sans Pro');
 
@@ -100,6 +101,12 @@
             box-shadow: none;
             padding-left: 0;
             padding-right: 0;
+        }
+    }
+
+    header {
+        h1, h2, h3, h4, h5, h6 {
+             font-family: "Arvo", "Libre Franklin", serif;
         }
     }
 
