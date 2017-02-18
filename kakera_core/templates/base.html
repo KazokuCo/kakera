@@ -23,17 +23,17 @@
     <meta property="og:image" content="{% absolute_media_url site_theme_cover_image.url %}" />
     {% endblock %}
 
-    {% if site_theme %}
-    <style type="text/css">
-    .theme-background { background-image: url("{{ site_theme_background_image.url }}"); }
-    .theme-cover { background-image: url("{{ site_theme_cover_image.url }}"); }
-    {{ site_theme.extra_css|safe }}
-    </style>
-    {% endif %}
-
     {% compress css %}
     <link rel="stylesheet" type="text/x-scss" href="/static/css/app.scss" />
     {% endcompress %}
+
+    {% if site_theme %}
+    <style type="text/css">
+    {{ site_theme.extra_css|safe }}
+    .theme-background { background-image: url("{{ site_theme_background_image.url }}"); }
+    .theme-cover { background-image: url("{{ site_theme_cover_image.url }}"); }
+    </style>
+    {% endif %}
 </head>
 <body class="theme-background" itemscope itemtype="http://schema.org/WebPage">
     <header class="site-header theme-cover">
