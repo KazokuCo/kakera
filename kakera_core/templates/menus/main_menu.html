@@ -1,0 +1,12 @@
+{% load menu_tags %}
+
+<div role="navigation" class="pure-menu pure-menu-horizontal">
+    <ul class="pure-menu-list">
+        {% for item in menu_items %}
+            <li class="pure-menu-item{% if item.has_children_in_menu %} pure-menu-has-children pure-menu-allow-hover{% endif %}{% if item.active_class %} pure-menu-selected{% endif %}">
+                <a class="pure-menu-link" href="{{ item.href }}">{{ item.text }}</a>
+                {% if item.has_children_in_menu %}{% sub_menu item %}{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

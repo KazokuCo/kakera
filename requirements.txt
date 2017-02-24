@@ -1,5 +1,6 @@
 django >= 1.10, < 1.11
 wagtail < 2.0
+wagtailmenus
 django-redis
 hiredis
 django-storages

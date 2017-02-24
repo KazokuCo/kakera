@@ -1,4 +1,4 @@
-{% load compress kakera_tags wagtailcore_tags wagtailimages_tags %}
+{% load compress kakera_tags wagtailcore_tags wagtailimages_tags menu_tags %}
 {% get_site_theme request.site as site_theme %}
 {% get_site_settings request.site as site_settings %}
 {% image site_theme.background original as site_theme_background_image %}
@@ -81,7 +81,9 @@
                     </div>
                 </div>
                 <div class="nav" id="toggle">
-                    {% top_menu parent=request.site.root_page calling_page=self %}
+                    <div class="pull-left">
+                        {% main_menu %}
+                    </div>
                 </div>
             </div>
         </section>
