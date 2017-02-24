@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.dispatch import receiver
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -6,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.cache import cache
 from django.shortcuts import redirect
 from django.template.loader import get_template
+from django.utils.feedgenerator import Atom1Feed
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -117,6 +119,7 @@ class BlogPage(RoutablePageMixin, MenuPage):
         else:
             self.cooked = ""
             self.excerpt = ""
+            self.teaser = ""
 
         super(BlogPage, self).save(*args, **kwargs)
 
@@ -133,15 +136,36 @@ def blog_page_published(instance, **kwargs):
 def blog_page_deleted(instance, **kwargs):
     blog_page_changed(instance)
 
-class BlogIndexPage(MenuPage):
+class BlogIndexPage(RoutablePageMixin, MenuPage):
     parent_page_types = ['wagtailcore.Page']
+
+    @route(r'^feed/$')
+    def feed(self, request):
+        feed = Atom1Feed(
+            title=self.title,
+            link=self.full_url,
+            description="Latest posts from {}".format(self.title),
+        )
+        for post in self.get_posts().prefetch_related('tagged_items__tag'):
+            feed.add_item(
+                unique_id=post.slug,
+                title=post.title,
+                link=post.full_url,
+                description=post.excerpt,
+                author_name=post.author.get_username(),
+                pubdate=post.first_published_at,
+                updateddate=post.latest_revision_created_at,
+                categories=[t.name for t in post.tags.all()],
+            )
+        return HttpResponse(
+            feed.writeString('utf-8'),
+            content_type='text/xml; charset=utf-8',
+        )
 
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
 
-        posts = BlogPage.objects.child_of(self).live().select_related('author').order_by('-published')
-        pages = Paginator(posts, 12)
-
+        pages = Paginator(self.get_posts(), 12)
         page_nr = request.GET.get('page', 1)
         try:
             page = pages.page(page_nr)
@@ -152,6 +176,10 @@ class BlogIndexPage(MenuPage):
         context['blog_entries'] = page
 
         return context
+
+    def get_posts(self):
+        return BlogPage.objects.child_of(self).live()\
+                .select_related('author').order_by('-published')
 
 class StaticPage(RoutablePageMixin, Page):
     cover_image = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
