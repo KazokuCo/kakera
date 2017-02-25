@@ -117,3 +117,13 @@ class Settings(models.Model):
 @receiver(post_save, sender=Theme)
 def theme_save(sender, instance, **kwargs):
     cache.clear()
+
+from wagtailmenus import models as menumodels
+menu_models = [
+    menumodels.Menu, menumodels.MainMenu, menumodels.FlatMenu,
+    menumodels.MenuItem, menumodels.MainMenuItem, menumodels.FlatMenuItem,
+]
+for model in menu_models:
+    @receiver(post_save, sender=model)
+    def theme_model_save(sender, instnace, **kwargs):
+        cache.clear()
