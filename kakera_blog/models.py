@@ -111,7 +111,7 @@ class BlogPage(RoutablePageMixin, MenuPage):
         return "summary_large_image"
 
     def save(self, *args, **kwargs):
-        cooked = str(get_template("kakera_blog/_blog_page_body.html").render({'page': self}))
+        cooked = str(get_template("kakera_blog/_page_body.html").render({'page': self}))
         if cooked.strip():
             self.excerpt = ' '.join(html.fromstring(cooked.encode('utf-8'))\
                 .text_content().split(' ')[:50]).strip().rstrip('.') + '...'
@@ -218,7 +218,7 @@ class StaticPage(RoutablePageMixin, Page):
         return "summary_large_image"
 
     def save(self, *args, **kwargs):
-        cooked = get_template("kakera_blog/_blog_page_cooked.html").render({'page': self})
+        cooked = get_template("kakera_blog/_page_body.html").render({'page': self})
         if cooked.strip():
             self.excerpt = ' '.join(html.fromstring(cooked)\
                 .text_content().split(' ')[:50]).rstrip('.') + '...'
