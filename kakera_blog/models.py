@@ -38,11 +38,32 @@ class SteamWidgetBlock(blocks.IntegerBlock):
         template = 'kakera_blog/blocks/steam.html'
         icon = 'site'
 
+class GridRowBlock(blocks.StreamBlock):
+    class Meta:
+        template = 'kakera_blog/blocks/grid_row.html'
+        icon = 'horizontalrule'
+
+    image = ImageChooserBlock()
+    embed = EmbedBlock()
+
+    def get_context(self, value, parent_context=None):
+        context = super(GridRowBlock, self).get_context(value, parent_context=parent_context)
+        context['columns'] = int(12 / len(value))
+        return context
+
+class GridBlock(blocks.StreamBlock):
+    class Meta:
+        template = 'kakera_blog/blocks/grid.html'
+        icon = 'table'
+
+    row = GridRowBlock()
+
 class DefaultStreamBlock(blocks.StreamBlock):
     markdown = MarkdownBlock()
     image = ImageChooserBlock()
     embed = EmbedBlock()
     steam_widget = SteamWidgetBlock(help_text="Enter a Steam ID, eg. to embed Harmonia (https://store.steampowered.com/app/421660), enter: 421660.")
+    grid = GridBlock()
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('kakera_blog.BlogPage', related_name='tagged_items')
