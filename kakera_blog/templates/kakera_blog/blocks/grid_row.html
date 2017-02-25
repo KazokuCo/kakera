@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+<div class="row">
+{% for block in value %}
+    <div class="col col-sm-{{ columns }}">
+        {% include_block block %}
+    </div>
+{% endfor %}
+</div>
