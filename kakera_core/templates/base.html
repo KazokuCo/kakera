@@ -100,8 +100,8 @@
     {% endcompress %}
 
     {% if site_settings.google_analytics_id %}
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <script>
+    <script async src='https://www.google-analytics.com/analytics.js' data-turbolinks-eval="false"></script>
+    <script data-turbolinks-eval="false">
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', '{{ site_settings.google_analytics_id }}', 'auto');
     ga('send', 'pageview');
