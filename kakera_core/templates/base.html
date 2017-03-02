@@ -98,4 +98,14 @@
     <script type="text/javascript" src="/static/turbolinks/dist/turbolinks.js" data-turbolinks-eval="false"></script>
     <script type="text/javascript" src="/static/js/app.js" data-turbolinks-eval="false"></script>
     {% endcompress %}
+
+    {% if site_settings.google_analytics_id %}
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', '{{ site_settings.google_analytics_id }}', 'auto');
+    ga('send', 'pageview');
+    document.addEventListener('turbolinks:load', function() { ga('send', 'pageview'); });
+    </script>
+    {% endif %}
 </body>

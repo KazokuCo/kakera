@@ -85,6 +85,7 @@ class Settings(models.Model):
     discourse_url = models.URLField(max_length=255, blank=True)
 
     cloudflare_zone_id = models.CharField(max_length=32, blank=True)
+    google_analytics_id = models.CharField(max_length=255, blank=True)
 
     panels = [
         FieldPanel('site'),
@@ -109,6 +110,9 @@ class Settings(models.Model):
         MultiFieldPanel([
             FieldPanel('cloudflare_zone_id'),
         ], "Cloudflare"),
+        MultiFieldPanel([
+            FieldPanel('google_analytics_id'),
+        ], "Google Analytics"),
     ]
 
     def __str__(self):
