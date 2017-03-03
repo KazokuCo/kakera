@@ -75,7 +75,6 @@ if DEBUG:
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'kakera_core.middleware.set_cache_headers.set_cache_headers',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -87,6 +86,7 @@ MIDDLEWARE = [
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
+    'kakera_core.middleware.set_cache_headers.set_cache_headers',
 ]
 
 ROOT_URLCONF = 'kakera.urls'

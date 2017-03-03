@@ -1,4 +1,4 @@
-from django.utils.cache import patch_cache_control
+from django.utils.cache import patch_response_headers
 
 def set_cache_headers(get_response):
     def middleware(request):
@@ -6,7 +6,7 @@ def set_cache_headers(get_response):
 
         # Lower the duration of the browser's cache below the server's.
         # We can clear the server's cache, not the client's.
-        patch_cache_control(response, max_age=10*60)
+        patch_response_headers(response, cache_timeout=10*60)
 
         return response
 
