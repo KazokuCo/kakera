@@ -161,6 +161,10 @@ def blog_page_deleted(instance, **kwargs):
 class BlogIndexPage(RoutablePageMixin, MenuPage):
     parent_page_types = ['wagtailcore.Page']
 
+    @route(r'^rss/$')
+    def edit(self, request):
+        return redirect(self.url + 'feed/')
+
     @route(r'^feed/$')
     def feed(self, request):
         feed = Atom1Feed(
