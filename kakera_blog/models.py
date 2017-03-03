@@ -22,12 +22,12 @@ from wagtail.wagtailembeds.format import embed_to_frontend_html
 from wagtail.wagtailembeds.embeds import get_embed
 from wagtail.wagtailembeds.exceptions import EmbedException
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.contrib.wagtailfrontendcache.utils import purge_page_from_cache
 from wagtailmenus.models import MenuPage
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from lxml import html
+from kakera_core.ext.cloudflare import purge_urls
 
 class MarkdownBlock(blocks.TextBlock):
     class Meta:
@@ -142,8 +142,10 @@ class BlogPage(RoutablePageMixin, MenuPage):
         super(BlogPage, self).save(*args, **kwargs)
 
 def blog_page_changed(page):
+    urls = [page.url]
     for index_page in BlogIndexPage.objects.ancestor_of(page):
-        purge_page_from_cache(index_page)
+        urls.append(index_page.url)
+    purge_urls(urls)
     cache.clear()
 
 @receiver(page_published, sender=BlogPage)
@@ -249,6 +251,7 @@ class StaticPage(RoutablePageMixin, Page):
         super(StaticPage, self).save(*args, **kwargs)
 
 def static_page_changed(page):
+    purge_urls([page.url])
     cache.clear()
 
 @receiver(page_published, sender=StaticPage)

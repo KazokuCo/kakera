@@ -4,10 +4,12 @@ from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 from django.core.cache import cache
 from django.contrib.auth.models import AbstractUser
+from wagtail.wagtailcore.models import Site
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailimages.models import Image as BaseImage, AbstractImage, AbstractRendition
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from kakera_core.ext.cloudflare import purge_site
 
 def validate_no_at_prefix(value):
     if len(value) >= 1 and value[0] == '@':
@@ -66,6 +68,7 @@ class Theme(models.Model):
 
 @receiver(post_save, sender=Theme)
 def theme_save(sender, instance, **kwargs):
+    purge_site(instance.site)
     cache.clear()
 
 
@@ -120,6 +123,7 @@ class Settings(models.Model):
 
 @receiver(post_save, sender=Theme)
 def theme_save(sender, instance, **kwargs):
+    purge_site(instance.site)
     cache.clear()
 
 from wagtailmenus import models as menumodels
@@ -129,5 +133,8 @@ menu_models = [
 ]
 for model in menu_models:
     @receiver(post_save, sender=model)
-    def theme_model_save(sender, instnace, **kwargs):
+    def theme_model_save(sender, instance, **kwargs):
+        # TODO: Figure out which site was actually changed >_>
+        for site in Site.objects.all():
+            purge_site(site)
         cache.clear()

@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-    'wagtail.contrib.wagtailfrontendcache',
     'wagtail.contrib.modeladmin',
     'wagtailmenus',
     'modelcluster',
@@ -186,12 +185,9 @@ CACHES = {
 
 CACHE_MIDDLEWARE_SECONDS = 0 if DEBUG else 60*60*24*30
 
-WAGTAILFRONTENDCACHE = {
-    'cloudflare': {
-        'BACKEND': 'kakera_core.ext.cloudflare.frontend_cache.CloudflareBackend',
-        'EMAIL': os.environ.get('CLOUDFLARE_EMAIL', ''),
-        'TOKEN': os.environ.get('CLOUDFLARE_TOKEN', ''),
-    },
+CLOUDFLARE = {
+    'EMAIL': os.environ.get('CLOUDFLARE_EMAIL', ''),
+    'TOKEN': os.environ.get('CLOUDFLARE_TOKEN', ''),
 }
 
 DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
