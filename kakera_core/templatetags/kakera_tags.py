@@ -35,4 +35,4 @@ def force_http(url):
 MARKDOWN_LINEBREAKS_RE = re.compile(r'(?<!\n)\n(?!\n)', flags=re.MULTILINE)
 @register.filter(is_safe=True)
 def markdown_linebreaks(s):
-    return MARKDOWN_LINEBREAKS_RE.sub('<br/>\n', s)
+    return MARKDOWN_LINEBREAKS_RE.sub('<br/>\n', s.strip())
