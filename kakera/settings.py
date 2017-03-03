@@ -86,7 +86,6 @@ MIDDLEWARE = [
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
-    'kakera_core.middleware.set_cache_headers.set_cache_headers',
 ]
 
 ROOT_URLCONF = 'kakera.urls'
@@ -183,7 +182,7 @@ CACHES = {
     },
 }
 
-CACHE_MIDDLEWARE_SECONDS = 0 if DEBUG else 60*60*24*30
+CACHE_MIDDLEWARE_SECONDS = 0 if DEBUG else 10*60
 
 CLOUDFLARE = {
     'EMAIL': os.environ.get('CLOUDFLARE_EMAIL', ''),
