@@ -99,8 +99,6 @@
 
         @media(max-width: $screen-md-max) {
             box-shadow: none;
-            padding-left: 0;
-            padding-right: 0;
         }
     }
 
@@ -184,10 +182,6 @@
         header, section {
             font-size: 16px;
             padding: 0 10px;
-
-            @media(max-width: $screen-sm-max) {
-                padding: 0;
-            }
         }
         .blog-item-posted {
             color: #777;
@@ -238,6 +232,10 @@
 
         h3 {
             margin-top: 0;
+        }
+
+        @media(max-width: $screen-sm-max) {
+            padding-top: 10px;
         }
     }
 }
