@@ -94,7 +94,7 @@
     </div>
 
     <div class="blog-box blog-comments">
-        {% if site_settings.discourse_url %}
+        {% if site_settings.discourse_url and not request.is_preview %}
         <div id="discourse-comments"></div>
         <script type="text/javascript">
             DiscourseEmbed = {

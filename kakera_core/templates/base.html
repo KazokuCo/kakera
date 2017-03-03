@@ -99,7 +99,7 @@
     <script type="text/javascript" src="/static/js/app.js" data-turbolinks-eval="false"></script>
     {% endcompress %}
 
-    {% if site_settings.google_analytics_id %}
+    {% if site_settings.google_analytics_id and not request.is_preview %}
     <script async src='https://www.google-analytics.com/analytics.js' data-turbolinks-eval="false"></script>
     <script data-turbolinks-eval="false">
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
