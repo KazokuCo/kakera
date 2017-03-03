@@ -145,6 +145,8 @@ def blog_page_changed(page):
     urls = [page.url]
     for index_page in BlogIndexPage.objects.ancestor_of(page):
         urls.append(index_page.url)
+        for page in index_page.get_pages(index_page.get_posts()).page_range:
+            urls.append(index_page.url + "?page=" + str(page))
     purge_urls(urls)
     cache.clear()
 
@@ -185,7 +187,7 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
 
-        pages = Paginator(self.get_posts(), 12)
+        pages = self.get_pages(self.get_posts())
         page_nr = request.GET.get('page', 1)
         try:
             page = pages.page(page_nr)
@@ -196,6 +198,9 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
         context['blog_entries'] = page
 
         return context
+
+    def get_pages(self, qs):
+        return Paginator(qs, 12)
 
     def get_posts(self):
         return BlogPage.objects.child_of(self).live()\
