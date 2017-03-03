@@ -25,6 +25,12 @@ def force_https(url):
         return "https" + url[4:]
     return url
 
+@register.filter()
+def force_http(url):
+    if url.startswith('https://'):
+        return "http" + url[5:]
+    return url
+
 # PARSE MARKDOWN WITH REGEX
 MARKDOWN_LINEBREAKS_RE = re.compile(r'(?<!\n)\n(?!\n)', flags=re.MULTILINE)
 @register.filter(is_safe=True)
