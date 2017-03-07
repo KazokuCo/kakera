@@ -99,7 +99,7 @@
         <script type="text/javascript">
             DiscourseEmbed = {
                 discourseUrl: "{{ site_settings.discourse_url }}",
-                discourseEmbedUrl: "{{ request.build_absolute_uri }}",
+                discourseEmbedUrl: "{{ request.build_absolute_uri|force_https }}",
             };
 
             (function() {
