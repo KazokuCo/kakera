@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.dispatch import receiver
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -188,10 +189,17 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
             content_type='text/xml; charset=utf-8',
         )
 
-    def get_context(self, request):
+    @route(r'^tags/([^/]+)/$')
+    def tag(self, request, tag):
+        ctx = self.get_context(request, self.get_posts().filter(tags__slug=tag))
+        return render(request, "kakera_blog/blog_index_page.html", ctx)
+
+    def get_context(self, request, queryset=None):
         context = super(BlogIndexPage, self).get_context(request)
 
-        pages = self.get_pages(self.get_posts())
+        if queryset is None:
+            queryset = self.get_posts()
+        pages = self.get_pages(queryset)
         page_nr = request.GET.get('page', 1)
         try:
             page = pages.page(page_nr)
