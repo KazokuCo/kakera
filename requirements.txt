@@ -10,6 +10,8 @@ django-compressor
 django-libsass
 django-markdown-deux
 django-gravatar2
+pillow
+scipy
 boto3
 html5lib
 lxml

@@ -1,9 +1,6 @@
 {% load wagtailimages_tags %}
 {% image image original as original_image %}
 {% image image height-562 as scaled_image %}
-<div class="image" style="max-width:{{ scaled_image.width }}px">
-    <div style="padding-top:{{ scaled_image.aspect_ratio_pct }}%"></div>
-    <a href="{{ image.file.url }}" target="_blank">
-        <img src="{{ scaled_image.url }}" srcset="{{ scaled_image.url }} {{ scaled_image.width }}w,{{ original_image.url }} {{ original_image.width }}w" alt="{{ scaled_image.alt }}" {% if itemprop %}itemprop="{{ itemprop }}"{% endif %}/>
-    </a>
-</div>
+<a href="{{ link or original_image.url }}" target="_blank">
+    {% include "kakera_blog/_image_rendition.html" with original_image=original_image scaled_image=scaled_image color=image.color itemprop=itemprop %}
+</a>

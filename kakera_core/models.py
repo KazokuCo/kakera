@@ -1,3 +1,6 @@
+import scipy
+import scipy.misc
+import scipy.cluster
 from django.db import models
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
@@ -22,7 +25,21 @@ class User(AbstractUser):
 
 
 class CustomImage(AbstractImage):
+    color = models.CharField(max_length=6, blank=True)
     admin_form_fields = BaseImage.admin_form_fields
+
+    def save(self, *args, **kwargs):
+        with self.get_willow_image() as willow:
+            if willow.has_alpha():
+                self.color = ""
+            else:
+                img = willow.get_pillow_image().resize((150,150)).convert('RGB')
+                ar = scipy.misc.fromimage(img)
+                ar = ar.reshape(scipy.product(ar.shape[:2]), ar.shape[2]).astype(float)
+                color = (scipy.cluster.vq.kmeans2(ar, 1, minit='points')[0]).astype(int)[0]
+                self.color = "{:02x}{:02x}{:02x}".format(*color)
+
+        super(CustomImage, self).save(*args, **kwargs)
 
 class CustomRendition(AbstractRendition):
     image = models.ForeignKey(CustomImage, related_name='renditions')
