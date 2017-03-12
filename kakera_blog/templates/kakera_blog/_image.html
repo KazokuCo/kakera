@@ -1,6 +1,6 @@
 {% load wagtailimages_tags %}
 {% image image original as original_image %}
 {% image image height-562 as scaled_image %}
-<a href="{{ link or original_image.url }}" target="_blank">
+<a href="{{ link|default:original_image.url }}" target="_blank">
     {% include "kakera_blog/_image_rendition.html" with original_image=original_image scaled_image=scaled_image color=image.color itemprop=itemprop %}
 </a>
