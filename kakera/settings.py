@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'kakera_core',
     'kakera_blog',
     'storages',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'health_check',
     'health_check.db',
     'health_check.cache',
@@ -74,7 +74,7 @@ if DEBUG:
     ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
