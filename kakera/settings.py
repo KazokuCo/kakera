@@ -85,6 +85,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'kakera_core.middleware.server_push.ServerPushMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
