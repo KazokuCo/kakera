@@ -9,6 +9,7 @@ from django.core.cache import cache
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils.feedgenerator import Atom1Feed
+from django.views.decorators.cache import cache_control
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -190,6 +191,7 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
         )
 
     @route(r'^tags/([^/]+)/$')
+    @cache_control(private=True)
     def tag(self, request, tag):
         ctx = self.get_context(request, self.get_posts().filter(tags__slug=tag))
         return render(request, "kakera_blog/blog_index_page.html", ctx)
