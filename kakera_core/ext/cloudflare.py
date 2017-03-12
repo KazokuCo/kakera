@@ -33,14 +33,15 @@ def urls_with_both_protocols(urls):
     return newurls
 
 def purge_urls(urls):
+    purged_urls = urls_with_both_protocols(urls)
+    for url in purged_urls:
+        logger.info("[cloudflare] purging: %s", url)
+
     zone_id = get_zone_id_for_url(urls[0])
     cf = get_client()
     if not zone_id or not cf:
         return
 
-    purged_urls = urls_with_both_protocols(urls)
-    for url in purged_urls:
-        logger.info("[cloudflare] purging: %s", url)
     cf.zones.purge_cache.delete(zone_id, data={'files': purged_urls})
 
 def purge_site(site):

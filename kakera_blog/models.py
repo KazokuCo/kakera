@@ -147,8 +147,13 @@ def blog_page_changed(page):
     urls = [page.url]
     for index_page in BlogIndexPage.objects.ancestor_of(page):
         urls.append(index_page.url)
-        for page in index_page.get_pages(index_page.get_posts()).page_range:
-            urls.append(index_page.url + "?page=" + str(page))
+        for page_nr in index_page.get_pages(index_page.get_posts()).page_range:
+            urls.append(index_page.url + "?page=" + str(page_nr))
+        for tag in page.tags.all():
+            tag_url = "{}tags/{}/".format(index_page.url, tag.slug)
+            urls.append(tag_url)
+            for page_nr in index_page.get_pages(index_page.get_posts().filter(tags=tag)).page_range:
+                urls.append(tag_url + "?page=" + str(page_nr))
     purge_urls(urls)
     cache.clear()
 
@@ -191,7 +196,6 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
         )
 
     @route(r'^tags/([^/]+)/$')
-    @cache_control(private=True)
     def tag(self, request, tag):
         ctx = self.get_context(request, self.get_posts().filter(tags__slug=tag))
         return render(request, "kakera_blog/blog_index_page.html", ctx)
