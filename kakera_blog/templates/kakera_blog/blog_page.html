@@ -33,7 +33,7 @@
 
 {% block content %}
 <div class="container" itemscope itemtype="http://schema.org/Article" itemprop="mainEntity">
-    <link itemprop="mainEntityOfPage" href="{{ request.build_absolute_uri }}" />
+    <link itemprop="mainEntityOfPage" href="{{ page.url }}" />
     <article class="blog-box blog-post">
         <header class="post-header">
             <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
@@ -65,7 +65,7 @@
                 <a class="twitter" href="https://twitter.com/share?via={{ site_settings.twitter_username }}&related={{ site_settings.twitter_username }}{% if page.author.twitter %},{{ page.author.twitter }}{% endif %}" target="_blank" onclick="window.open(this.href, null, 'width=550,height=600');return false"><i class="fa fa-twitter"></i>&nbsp;Tweet</a>
                 {% endif %}
                 {% if site_settings.facebook_id %}
-                <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" onclick="window.open(this.href, null, 'width=550,height=600');return false"><i class="fa fa-facebook"></i>&nbsp;Share</a>
+                <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url|urlencode }}" target="_blank" onclick="window.open(this.href, null, 'width=550,height=600');return false"><i class="fa fa-facebook"></i>&nbsp;Share</a>
                 {% endif %}
             </span>
             <span class="post-published">
