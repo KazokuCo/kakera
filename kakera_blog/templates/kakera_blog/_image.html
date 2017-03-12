@@ -1,8 +1,9 @@
 {% load wagtailimages_tags %}
-{% image image height-562 as full_image %}
-<div class="image" style="max-width:{{ full_image.width }}px">
-    <div style="padding-top:{{ full_image.aspect_ratio_pct }}%"></div>
+{% image image original as original_image %}
+{% image image height-562 as scaled_image %}
+<div class="image" style="max-width:{{ scaled_image.width }}px">
+    <div style="padding-top:{{ scaled_image.aspect_ratio_pct }}%"></div>
     <a href="{{ image.file.url }}" target="_blank">
-        <img src="{{ full_image.url }}" alt="{{ full_image.alt }}" {% if itemprop %}itemprop="{{ itemprop }}"{% endif %}/>
+        <img src="{{ scaled_image.url }}" srcset="{{ scaled_image.url }} {{ scaled_image.width }}w,{{ original_image.url }} {{ original_image.width }}w" alt="{{ scaled_image.alt }}" {% if itemprop %}itemprop="{{ itemprop }}"{% endif %}/>
     </a>
 </div>
