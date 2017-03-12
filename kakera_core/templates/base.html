@@ -41,8 +41,9 @@
             <div class="container">
                 {% if site_theme %}
                 {% image site_theme.logo original as logo_image %}
+                {% image site_theme.logo height-225 as logo_image_scaled %}
                 <a href="{% pageurl request.site.root_page %}">
-                    <img src="{{ logo_image.url }}" id="logo" />
+                    {% include "kakera_blog/_image_rendition.html" with original_image=logo_image scaled_image=logo_image_scaled %}
                 </a>
                 {% endif %}
             </div>
