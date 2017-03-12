@@ -1,6 +1,4 @@
 import re
-from django.http.response import HttpResponse
-from django.template.response import TemplateResponse
 
 # Automatically add HTTP/2 Server Push to pages.
 #
@@ -21,7 +19,9 @@ def post_render_callback(response):
 def ServerPushMiddleware(get_response):
     def middleware(request):
         response = get_response(request)
-        if isinstance(response, TemplateResponse):
+        try:
             response.add_post_render_callback(post_render_callback)
+        except AttributeError:
+            pass
         return response
     return middleware
