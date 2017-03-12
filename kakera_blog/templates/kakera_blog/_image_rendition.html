@@ -1,5 +1,4 @@
-{% load wagtailimages_tags %}
 <div class="image" style="max-width:{{ scaled_image.width }}px{% if color %};background-color:#{{ color }}{% endif %}">
     <div style="padding-top:{{ scaled_image.aspect_ratio_pct }}%"></div>
-        <img src="{{ scaled_image.url }}" srcset="{{ scaled_image.url }} {{ scaled_image.width }}w,{{ original_image.url }} {{ original_image.width }}w" alt="{{ scaled_image.alt }}" {% if itemprop %}itemprop="{{ itemprop }}"{% endif %}/>
+        <img src="{{ scaled_image.url }}"{% if original_image.width != scaled_image.width %} srcset="{{ scaled_image.url }} {{ scaled_image.width }}w,{{ original_image.url }} {{ original_image.width }}w"{% endif %} alt="{{ scaled_image.alt }}" {% if itemprop %}itemprop="{{ itemprop }}"{% endif %}/>
 </div>
