@@ -51,7 +51,7 @@
         </section>
         {% elif page.cover_image %}
         <section class="block-image post-cover">
-            {% image page.cover_image original itemprop="image" %}
+            {% include "kakera_blog/_image.html" with image=page.cover_image itemprop="image" %}
         </section>
         {% endif %}
 

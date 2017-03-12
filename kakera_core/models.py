@@ -27,6 +27,12 @@ class CustomImage(AbstractImage):
 class CustomRendition(AbstractRendition):
     image = models.ForeignKey(CustomImage, related_name='renditions')
 
+    def aspect_ratio(self):
+        return self.height / self.width
+
+    def aspect_ratio_pct(self):
+        return int(self.aspect_ratio() * 100)
+
     class Meta:
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),

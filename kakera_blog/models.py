@@ -62,7 +62,7 @@ class GridBlock(blocks.StreamBlock):
 
 class DefaultStreamBlock(blocks.StreamBlock):
     markdown = MarkdownBlock()
-    image = ImageChooserBlock()
+    image = ImageChooserBlock(template="kakera_blog/blocks/image.html")
     embed = EmbedBlock()
     steam_widget = SteamWidgetBlock(help_text="Enter a Steam ID, eg. to embed Harmonia (https://store.steampowered.com/app/421660), enter: 421660.")
     grid = GridBlock()
