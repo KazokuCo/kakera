@@ -9,6 +9,7 @@ ADMIN_FILTERS = [
 
 COVER_FILTERS = [
     'original',
+    'height-562',
     'max-500x300',
 ] + ADMIN_FILTERS
 
