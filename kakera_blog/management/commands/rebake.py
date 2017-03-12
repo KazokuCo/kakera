@@ -14,6 +14,7 @@ COVER_FILTERS = [
 
 BLOCK_FILTERS = [
     'original',
+    'height-562',
 ] + ADMIN_FILTERS
 
 class Command(BaseCommand):
