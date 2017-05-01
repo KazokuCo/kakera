@@ -9,6 +9,8 @@
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <link rel="alternate" type="application/rss+xml" href="/feed/" />
+
     <meta property="og:type" content="{% firstof page.get_og_type 'website' %}" />
     <meta property="og:url" content="{{ page.url }}" />
     <meta property="og:title" content="{{ page.title }}" />
