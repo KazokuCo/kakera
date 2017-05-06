@@ -75,6 +75,7 @@ class Theme(models.Model):
     cover = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     background = models.ForeignKey('kakera_core.CustomImage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     extra_css = models.TextField(blank=True)
+    extra_head = models.TextField(blank=True)
 
     panels = [
         FieldPanel('name'),
@@ -84,6 +85,7 @@ class Theme(models.Model):
         ImageChooserPanel('cover'),
         ImageChooserPanel('background'),
         FieldPanel('extra_css'),
+        FieldPanel('extra_head'),
     ]
 
     def __str__(self):

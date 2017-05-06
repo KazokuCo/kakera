@@ -35,6 +35,7 @@
     .theme-background { background-image: url("{{ site_theme_background_image.url }}"); }
     .theme-cover { background-image: url("{{ site_theme_cover_image.url }}"); }
     </style>
+    {{ site_theme.extra_head|safe }}
     {% endif %}
 </head>
 <body class="theme-background" itemscope itemtype="http://schema.org/WebPage">
