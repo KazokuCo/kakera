@@ -111,5 +111,7 @@
     ga('send', 'pageview');
     document.addEventListener('turbolinks:load', function() { ga('send', 'pageview'); });
     </script>
+    {% endif %}{% if site_theme %}
+    {{ site_theme.extra_body_end|safe }}
     {% endif %}
 </body>
