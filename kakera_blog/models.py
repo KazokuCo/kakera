@@ -102,8 +102,8 @@ class BlogPage(RoutablePageMixin, MenuPage):
     parent_page_types = ['kakera_blog.BlogIndexPage']
     subpage_types = []
 
-    # Redirect /edit to the admin edit form.
-    @route(r'^edit/$')
+    # Redirect /to-edit/ to the admin edit form.
+    @route(r'^to-edit/$')
     def edit(self, request):
         return redirect('wagtailadmin_pages:edit', self.pk)
 
