@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:3.6
 
 # We do NOT want to run with DEBUG on in production by accident.
 ENV DEBUG False
