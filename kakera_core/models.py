@@ -55,14 +55,6 @@ class CustomRendition(AbstractRendition):
             ('image', 'filter_spec', 'focal_point_key'),
         )
 
-@receiver(post_delete, sender=CustomImage)
-def image_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
-@receiver(post_delete, sender=CustomRendition)
-def rendition_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
 
 
 @register_snippet
