@@ -246,8 +246,8 @@ class StaticPage(RoutablePageMixin, Page):
         FieldPanel('ordering'),
     ]
 
-    # Redirect /edit to the admin edit form.
-    @route(r'^edit/$')
+    # Redirect /to-edit to the admin edit form.
+    @route(r'^to-edit/$')
     def edit(self, request):
         return redirect('wagtailadmin_pages:edit', self.pk)
 
