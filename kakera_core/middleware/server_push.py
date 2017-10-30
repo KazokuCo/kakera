@@ -11,8 +11,8 @@ JS_RE = re.compile(r'<script type="text/javascript" src="([^"]+)"')
 def post_render_callback(response):
     response["Link"] = ",".join([
         "<{}>;rel=preload;as={}".format(url, kind) for (url, kind) in \
-            [(url, "style") for url in CSS_RE.findall(response.rendered_content)] + \
-            [(url, "script") for url in JS_RE.findall(response.rendered_content)]
+            [(url, "style") for url in CSS_RE.findall(str(response.rendered_content))] + \
+            [(url, "script") for url in JS_RE.findall(str(response.rendered_content))]
     ])
     return response
 
