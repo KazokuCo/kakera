@@ -11,7 +11,7 @@ def get_client():
     return CloudFlare(
         email=conf.get('EMAIL', None),
         token=conf.get('TOKEN', None),
-    )
+    ) if conf.get('EMAIL', None) else None
 
 def get_zone_id_for_site(site):
     site_settings = site.settings.first()
