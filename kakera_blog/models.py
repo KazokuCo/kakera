@@ -98,8 +98,7 @@ class BlogPage(RoutablePageMixin, MenuPage):
         FieldPanel('tags'),
     ]
 
-    # Only allow blog posts under index pages, disallow subpages
-    parent_page_types = ['kakera_blog.BlogIndexPage']
+    parent_page_types = ['kakera_blog.BlogIndexPage', 'kakera_blog.StaticPage']
     subpage_types = []
 
     # Redirect /to-edit/ to the admin edit form.
@@ -221,7 +220,7 @@ class BlogIndexPage(RoutablePageMixin, MenuPage):
         return Paginator(qs, 12)
 
     def get_posts(self):
-        return BlogPage.objects.child_of(self).live()\
+        return BlogPage.objects.descendant_of(self).live()\
                 .select_related('author').order_by('-published')
 
 class StaticPage(RoutablePageMixin, Page):
