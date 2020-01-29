@@ -105,7 +105,7 @@
             (function() {
                 document.getElementById('discourse-comments').innerHTML = '';
                 var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
-                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                d.src = '{{ site_settings.discourse_url }}javascripts/embed.js?{{ page.id }}';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
             })();
         </script>
